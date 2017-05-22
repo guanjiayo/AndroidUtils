@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<ImageView
+    android:id="@+id/iv"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"/>
+    <Button
+        android:onClick="choosepic"
+        android:text="原图"
+        android:id="@+id/choosepic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:onClick="change_option"
+        android:text="缩放比例"
+        android:id="@+id/change_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:onClick="change_rgb"
+        android:text="解码格式"
+        android:id="@+id/change_rgb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:onClick="partload"
+        android:text="局部加载"
+        android:id="@+id/partload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:onClick="offset"
+        android:text="(局部加载)偏移"
+        android:id="@+id/offset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
