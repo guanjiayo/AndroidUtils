@@ -1,149 +1,170 @@
 package zs.xmx.permission;
 
-import android.app.Activity;
-import android.content.DialogInterface;
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
 
 import zs.xmx.R;
+import zs.xmx.utils.Logger;
 
-/**
- * 权限获取页面
- * <p>
- * ActivityCompat.requestPermissions, ActivityCompat兼容低版本.
- * <p>
- * <需要以下权限>
- */
+
 public class PermissionsActivity extends AppCompatActivity {
 
-    public static final int PERMISSIONS_GRANTED = 0; // 权限授权
-    public static final int PERMISSIONS_DENIED  = 1; // 权限拒绝
 
-    private static final int    PERMISSION_REQUEST_CODE = 0; // 系统权限管理页面的参数
-    private static final String EXTRA_PERMISSIONS       =
-            "zs.xmx.permission.extra_permission"; // 权限参数
-    private static final String PACKAGE_URL_SCHEME      = "package:"; // 方案
-
-    private PermissionsChecker mChecker; // 权限检测器
-    private boolean            isRequireCheck; // 是否需要系统权限检测
-
-    // 启动当前权限页面的公开接口
-    public static void startActivityForResult(Activity activity, int requestCode, String... permissions) {
-        Intent intent = new Intent(activity, PermissionsActivity.class);
-        intent.putExtra(EXTRA_PERMISSIONS, permissions);
-        ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
-    }
+    private static final String TAG = PermissionsActivity.class.getSimpleName();
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent() == null || !getIntent().hasExtra(EXTRA_PERMISSIONS)) {
-            throw new RuntimeException("PermissionsActivity需要使用静态startActivityForResult方法启动!");
-        }
         setContentView(R.layout.activity_permissions);
-
-        mChecker = new PermissionsChecker(this);
-        isRequireCheck = true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isRequireCheck) {
-            String[] permissions = getPermissions();
-            if (mChecker.lacksPermissions(permissions)) {
-                requestPermissions(permissions); // 请求权限
-            } else {
-                allPermissionsGranted(); // 全部权限都已获取
-            }
-        } else {
-            isRequireCheck = true;
-        }
+    public void RECORD_AUDIO(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_RECORD_AUDIO, mOnPermissionListener);
     }
 
-    // 返回传递的权限参数
-    private String[] getPermissions() {
-        return getIntent().getStringArrayExtra(EXTRA_PERMISSIONS);
+    public void ACCOUNTS(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_GET_ACCOUNTS, mOnPermissionListener);
     }
 
-    // 请求权限兼容低版本
-    private void requestPermissions(String... permissions) {
-        ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE);
+
+    public void CALL_PHONE(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_CALL_PHONE, mOnPermissionListener);
     }
 
-    // 全部权限均已获取
-    private void allPermissionsGranted() {
-        setResult(PERMISSIONS_GRANTED);
-        finish();
+    public void FINE_LOCATION(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_ACCESS_FINE_LOCATION, mOnPermissionListener);
+    }
+
+    public void WRITE_EXTERNAL_STORAGE(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_WRITE_EXTERNAL_STORAGE, mOnPermissionListener);
+    }
+
+    public void camera(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_CAMERA, mOnPermissionListener);
+    }
+
+    public void READ_CALENDAR(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_READ_CALENDAR, mOnPermissionListener);
+    }
+
+    public void SENSORS(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_BODY_SENSORS, mOnPermissionListener);
+    }
+
+    public void SMS(View view) {
+        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_SEND_SMS, mOnPermissionListener);
+    }
+
+    public void Mutli(View view) {
+        PermissionsUtils.requestMultiPermission(this, new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, mOnPermissionListener);
+    }
+
+    public void ALL(View view) {
+        PermissionsUtils.requestAllPermissions(this, mOnPermissionListener);
     }
 
     /**
-     * 用户权限处理,
-     * 如果全部获取, 则直接过.
-     * 如果权限缺失, 则提示Dialog.
+     * 悬浮窗权限
+     * <p>
+     * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
+     * <p>
+     * 使用"package:" + getPackageName()携带App的包名信息
+     * <p>
+     * 使用Settings.canDrawOverlays方法判断授权结果
      *
-     * @param requestCode  请求码
-     * @param permissions  权限
-     * @param grantResults 结果
+     * @param view
+     */
+    public void Floating_window(View view) {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, REQUEST_Floating_WINDOW);
+    }
+
+    /**
+     * 系统设置
+     * <p>
+     * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
+     * <p>
+     * 使用"package:" + getPackageName()携带App的包名信息
+     * <p>
+     * 使用Settings.System.canWrite方法检测授权结果
+     *
+     * @param view
+     */
+    public void System_Setting(View view) {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+    }
+
+    private static final int REQUEST_Floating_WINDOW     = 1;
+    private static final int REQUEST_CODE_WRITE_SETTINGS = 2;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_Floating_WINDOW) {
+            if (Settings.canDrawOverlays(this)) {
+                Logger.i(TAG, "onActivityResult granted");
+            }
+        }
+        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
+            if (Settings.System.canWrite(this)) {
+                Logger.i(TAG, "onActivityResult write settings granted");
+            }
+        }
+    }
+
+    PermissionsUtils.OnPermissionListener mOnPermissionListener = new PermissionsUtils.OnPermissionListener() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            if (requestCode == PermissionsUtils.CODE_ALL_PERMISSION) {
+                Toast.makeText(PermissionsActivity.this, requestCode + " permission Granted", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == PermissionsUtils.CODE_Mutil_PERMISSION) {
+                Toast.makeText(PermissionsActivity.this, requestCode + " permission Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(PermissionsActivity.this, PermissionsUtils.requestPermissions[requestCode] + " permission Granted", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    };
+
+    /**
+     * 权限结果回调
+     *
+     * @param requestCode  权限的请求码
+     * @param permissions  权限数组
+     * @param grantResults 授权结果数组
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
-            isRequireCheck = true;
-            allPermissionsGranted();
-        } else {
-            isRequireCheck = false;
-            showMissingPermissionDialog();
-        }
-    }
-
-    // 含有全部的权限
-    private boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
-        for (int grantResult : grantResults) {
-            if (grantResult == PackageManager.PERMISSION_DENIED) {
-                return false;
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionsUtils.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        for (int i = 0; i < grantResults.length; i++) {
+            boolean isTip = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i]);
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                if (isTip) {//表明用户没有彻底禁止弹出权限请求
+                    Toast.makeText(this, "没有彻底禁止", Toast.LENGTH_SHORT).show();
+                } else {//表明用户已经彻底禁止弹出权限请求
+                    //   PermissionMonitorService.start(this);//这里一般会提示用户进入权限设置界面
+                    Toast.makeText(this, "彻底禁止", Toast.LENGTH_SHORT).show();
+                }
+                return;
             }
         }
-        return true;
     }
 
-    // 显示缺失权限提示
-    private void showMissingPermissionDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(PermissionsActivity.this);
-        builder.setTitle("帮助");
-        builder.setMessage("当前应用缺少必要权限\n请点击<设置>打开所需权限\n最后点击两次后退按钮返回");
 
-        // 拒绝, 退出应用
-        builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setResult(PERMISSIONS_DENIED);
-                finish();
-            }
-        });
-
-        builder.setPositiveButton("设置", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startAppSettings();
-            }
-        });
-
-        builder.show();
-    }
-
-    // 启动应用的设置
-    private void startAppSettings() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
-        startActivity(intent);
-    }
 }
