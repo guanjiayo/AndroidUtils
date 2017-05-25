@@ -8,33 +8,33 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 
-    <!--联系人权限-->
+    <!-- 联系人权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <!--电话权限-->
+    <!-- 电话权限 -->
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
     <uses-permission android:name="android.permission.USE_SIP"/>
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
-    <!--日历权限-->
+    <!-- 日历权限 -->
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
     <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-    <!--相机权限-->
+    <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA"/>
-    <!--传感器权限-->
+    <!-- 传感器权限 -->
     <uses-permission android:name="android.permission.BODY_SENSORS"/>
-    <!--定位权限-->
+    <!-- 定位权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!--存储权限-->
+    <!-- 存储权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--麦克风权限-->
+    <!-- 麦克风权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <!--短信权限-->
+    <!-- 短信权限 -->
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH"/>
     <uses-permission android:name="android.permission.RECEIVE_MMS"/>
@@ -56,6 +56,9 @@
         </activity>
         <activity android:name=".test.NetWorkActivity">
         </activity>
+        <activity android:name=".permission.PermissionsPluginActivity">
+        </activity>
+
     </application>
 
 </manifest>

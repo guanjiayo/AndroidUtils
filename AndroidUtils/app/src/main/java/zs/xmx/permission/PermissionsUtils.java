@@ -20,20 +20,14 @@ package zs.xmx.permission;
  *
  *
  * @补充内容
- *            //TODO 扩展性考虑,Diag自定义
- *            //TODO Android 版本判断
- *          //如果是6.0以下的手机，ActivityCompat.checkSelfPermission()会始终等于PERMISSION_GRANTED，
-        // 但是，如果用户关闭了你申请的权限，ActivityCompat.checkSelfPermission(),会导致程序崩溃(java.lang.RuntimeException: Unknown exception code: 1 msg null)，
-        // 你可以使用try{}catch(){},处理异常，也可以判断系统版本，低于23就不申请权限，直接做你想做的。permissionGrant.onPermissionGranted(requestCode);
-        //        if (Build.VERSION.SDK_INT < 23) {
-        //            permissionGrant.onPermissionGranted(requestCode);
-        //            return;
-        //        }
-        注意:
+ *
+ *       注意:
         1.部分手机修改过安卓系统Rom,如小米4,如小米4,shouldShowRequestPermissionRationale会一直返回false
         2.targetSDKVersion>=23才有动态权限机制
         3.6.0以前的版本,shouldShowRequestPermissionRationale会一直返回false
         4.兼容性,使用V4包下的ActivityCompat(CotextCompat是它的父类)
+        5.6.0以前的版本,ActivityCompat.checkSelfPermission()会始终等于PERMISSION_GRANTED
+        6.6.0以前的版本,如果用户关闭了你申请的权限，ActivityCompat.checkSelfPermission(),会导致程序崩溃,加判断低于23就不申请权限
 
  * ---------------------------------     
  * @更新时间   
@@ -50,7 +44,6 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -58,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import zs.xmx.utils.DialogUtils;
 import zs.xmx.utils.Logger;
 
 
@@ -171,9 +165,9 @@ public class PermissionsUtils {
      * <p>
      * 部分机型修改过Rom,如小米4,shouldShowRequestPermissionRationale会一直返回false
      *
-     * @param activity
-     * @param requestCode
-     * @param listener
+     * @param activity    上下文
+     * @param requestCode 请求码
+     * @param listener    监听器
      */
     public static void requestPermission(final Activity activity, final int requestCode, OnPermissionListener listener) {
         mOnPermissionListener = listener;
@@ -189,7 +183,14 @@ public class PermissionsUtils {
                 Logger.i(TAG, "是否被彻底禁止: " + !ActivityCompat.shouldShowRequestPermissionRationale(activity, requestPermission));
                 shouldShowRationale(activity, requestCode, requestPermission);
             } else {
-                //首次申请权限或彻底禁止,系统调用这个方法
+                /**
+                 * 首次申请权限或彻底禁止,系统调用这个方法
+                 *
+                 * 第一个参数是Context
+                 * 第二个参数是需要申请的权限的字符串数组(由此看出支持一次性申请多个权限)
+                 * 第三个参数为requestCode,回调的时候检测
+                 *
+                 */
                 ActivityCompat.requestPermissions(activity, new String[]{requestPermission}, requestCode);
 
             }
@@ -281,20 +282,8 @@ public class PermissionsUtils {
     }
 
 
-    /**
-     * //TODO 写一个回调,让外部实现Diolog
-     *
-     * @param context
-     * @param message
-     * @param okListener
-     */
     private static void showMessageOKCancel(Activity context, String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(context)
-                .setMessage(message)
-                .setPositiveButton("确定", okListener)
-                .setNegativeButton("拒绝", null)
-                .create()
-                .show();
+        DialogUtils.showAlert(context, "温馨提示", message, "确定", okListener, "取消", null);
     }
 
     /**
@@ -369,7 +358,6 @@ public class PermissionsUtils {
      * @param requestPermission
      */
     private static void shouldShowRationale(final Activity activity, final int requestCode, final String requestPermission) {
-        //TODO 自定义diag告诉用户需要申请权限
         //申请权限还是调用 ActivityCompat.requestPermissions(activity,new String[]{requestPermission},requestCode);
         showMessageOKCancel(activity, "系统部分功能需要: " + requestPermissions[requestCode] + "权限,才能正常运作,需要现在手动设置权限吗?", new DialogInterface.OnClickListener() {
             @Override
@@ -440,7 +428,6 @@ public class PermissionsUtils {
         } else {
 
             openPermissionsSetting(activity, "部分权限需要手动授权");
-            //TODO 显示一个列表告诉用户,这些权限需要手动授权
 
         }
     }
@@ -459,7 +446,7 @@ public class PermissionsUtils {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Logger.d(TAG, "getPackageName(): " + activity.getPackageName());
+                Logger.i(TAG, "getPackageName(): " + activity.getPackageName());
                 Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
                 intent.setData(uri);
                 activity.startActivity(intent);

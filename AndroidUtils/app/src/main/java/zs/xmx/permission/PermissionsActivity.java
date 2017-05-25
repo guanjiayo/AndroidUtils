@@ -167,4 +167,7 @@ public class PermissionsActivity extends AppCompatActivity {
     }
 
 
+    public void plugin(View view) {
+        startActivity(new Intent(this, PermissionsPluginActivity.class));
+    }
 }

@@ -93,6 +93,11 @@
                 android:text="特殊权限(系统设置)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <Button
+                android:onClick="plugin"
+                android:text="插件方法"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
