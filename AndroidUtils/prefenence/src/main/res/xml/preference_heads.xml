@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <header
+        android:fragment="zs.xmx.last.NormalPreferenceFragment"
+        android:summary="NormalPreferenceFragment"
+        android:title="NormalPreferenceFragment">
+        <!-- key/value pairs can be included as arguments for the fragment. -->
+        <extra
+            android:name="headers_key"
+            android:value="preference-headers 携带的值"/>
+    </header>
+    <header
+        android:fragment="zs.xmx.last.DialogPreferenceFragment"
+        android:summary="DialogPreferenceFragment"
+        android:title="DialogPreferenceFragment"/>
+
+    <header
+        android:fragment="zs.xmx.last.TwoStatePreferenceFragment"
+        android:summary="TwoStatePreferenceFragment"
+        android:title="TwoStatePreferenceFragment"/>
+    <header
+        android:fragment="zs.xmx.last.CustomPreferenceFragment"
+        android:summary="CustomPreferenceFragment"
+        android:title="CustomPreferenceFragment"/>
+
+</preference-headers>

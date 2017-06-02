@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:widgetLayout 选中框布局-->
+    <!--android:summaryOff	uncheck时的summary-->
+    <!--android:summaryOn	check时的summary-->
+    <CheckBoxPreference
+        android:icon="@mipmap/ic_launcher"
+        android:key="key_checkbox_preference"
+        android:order="10"
+        android:summary="CheckboxPreference summary"
+        android:summaryOff="Summary off"
+        android:summaryOn="On Summary"
+        android:title="CheckBoxPreference"/>
+
+    <CheckBoxPreference
+        android:icon="@mipmap/ic_launcher"
+        android:key="key_checkboxprefs2"
+        android:order="1"
+        android:summary="CheckBoxPreference2 summary"
+        android:summaryOff=" Off Summary2"
+        android:summaryOn="On Summary2"
+        android:title="CheckBoxPreference2"
+        android:widgetLayout="@layout/activity_show"
+        />
+    <!--android:summaryOff	uncheck时的summary-->
+    <!--android:summaryOn	check时的summary-->
+    <!--android:switchTextOff 处于off状态,switch使用的文本-->
+    <!--android:switchTextOn-->
+    <SwitchPreference
+        android:key="key_SwitchPreference"
+        android:order="1"
+        android:summary="SwitchPreference summary"
+        android:summaryOff="Off "
+        android:summaryOn="On"
+        android:switchTextOff="关"
+        android:switchTextOn="开"
+        android:title="SwitchPreference"
+        android:widgetLayout="@layout/activity_show"
+        />
+
+    <SwitchPreference
+        android:key="key_SwitchPreference2"
+        android:order="10"
+        android:summary="SwitchPreference2 summary"
+        android:summaryOff="Off2 "
+        android:summaryOn="On2"
+        android:title="SwitchPreference2"
+
+        />
+</PreferenceScreen>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <!--ListPreference在SharedPreference保存的状态-->
+    <string name="key_List">1</string>
+
+    <!--MultiSelectListPreference在SharedPreference保存的状态-->
+    <set name="key_MultiSelectList">
+        <string>1</string>
+        <string>2</string>
+    </set>
+
+    <!--EditTextPreference在SharedPreference保存的状态-->
+    <string name="key_EditText">fedhfghhfdghdffghdfgh</string>
+
+    <!--CheckBoxPreference在SharedPreference保存的状态-->
+    <boolean name="key_CheckBoxPreference" value="true" />
+
+    <!--RingtonePreference在SharedPreference保存的状态-->
+    <string name="key_RingtonePreference">content://media/internal/audio/media/6</string>
+
+</map>

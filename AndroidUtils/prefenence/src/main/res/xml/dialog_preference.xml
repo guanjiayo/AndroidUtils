@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--EditText getEditText()	获取显示在Dialog上的EditText-->
+    <!--String getText()	获取对应SharedPreferences保存的值-->
+    <!--String setText()	设置对应SharedPreferences保存的值-->
+    <EditTextPreference
+        android:dialogTitle="ETPreference"
+        android:key="key_EditText"
+        android:summary="EditTextPreference summary"
+        android:title="EditTextPreference"/>
+
+    <!--MultiSelectListPreference新增方法	说明-->
+    <!--int findIndexOfValue(String value)	返回获取ListPreference中的实体内容的下标值-->
+    <!--CharSequence[] getEntries()	返回当前Preference 设置的entries集合(xml配置的字符串数据源)-->
+    <!--CharSequence[] getEntryValues()	返回当前的entries对应的value集合(xml配置的字符串数据源)-->
+    <!--Set getValues()	返回当前选中的values，SharedPreference的-->
+    <!--void setEntries(int entriesResId)-->
+    <!--void setEntries(CharSequence[] entries)-->
+    <!--void setEntryValues(CharSequence[] entryValues)-->
+    <!--void setEntryValues(int entryValuesResId)-->
+    <!--void setValues(Set values)-->
+    <MultiSelectListPreference
+        android:dialogTitle="MultiSelectList"
+        android:entries="@array/game"
+        android:entryValues="@array/game_index"
+        android:key="key_MultiSelectList"
+        android:summary="MultiSelectListPreference summary"
+        android:title="MultiSelectListPreference"/>
+
+    <!--android:entries	列表的显示项数据源-->
+    <!--android:entryValues	列表实际保存至内部的值-->
+    <!--android:defaultValue	这个属性不是特有的，但是有一点需要注意：这里设置的是android:entryValues里的值-->
+    <!--android:dialogMessage	如果设置了这个属性，那么列表怎么会被覆盖掉-->
+    <!--int findIndexOfValue(String value)	返回获取ListPreference中的实体内容的下标值-->
+    <!--CharSequence[] getEntries()	返回当前Preference设置的entries集合(xml配置的字符串数据源)-->
+    <!--CharSequence getEntry()	返回当前选中的entries值-->
+    <!--CharSequence[] getEntryValues()	返回当前的entries对应的value集合(xml配置的字符串数据源)-->
+    <!--CharSequence getSummary()	获取当前summary-->
+    <!--String getValue()	获取key值-->
+    <ListPreference
+        android:dialogTitle="List"
+        android:entries="@array/game"
+        android:entryValues="@array/game_index"
+        android:key="key_List"
+        android:summary="ListPreference summary"
+        android:title="ListPreference"
+        />
+
+</PreferenceScreen>

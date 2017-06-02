@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="PreferenceCategory"
+        >
+        <!--android:widgetLayout  修改Preference里的子布局-->
+        <!--android:layout 修改Preference的布局-->
+        <Preference
+            android:icon="@mipmap/ic_launcher_round"
+            android:summary="Open otherActivity (Preference)"
+            android:title="Open otherActivity"
+            >
+            <!-- android:targetPackage是应用程序的包名，而android:targetClass的路径在子包下的类 -->
+            <!-- android:targetPackage设置为子包，运行时则找不到Activity -->
+            <intent
+                android:action="ACTION_A_INTENT"
+                android:targetClass="zs.xmx.last.OtherActivity"
+                android:targetPackage="zs.xmx">
+                <!--可以通过<extra>传附加信息getIntent().getStringExtra("intent_key") -->
+                <extra
+                    android:name="intent_key"
+                    android:value="PreferenceIntent 携带的Value"/>
+            </intent>
+
+        </Preference>
+    </PreferenceCategory>
+    <!--嵌套PreferenceScreen 会再打开一个子屏幕-->
+    <PreferenceScreen
+        android:summary="Open the Web (Preference)"
+        android:title="嵌套PreferenceScreen Open the Web "
+        >
+        <Preference
+            android:title="Open the Web (Preference)"
+            >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.hao123.com"/>
+
+        </Preference>
+    </PreferenceScreen>
+
+    <!--选择系统铃声的-->
+    <!--android:ringtoneType	铃声类型：ringtone、notification、all、alarm-->
+    <!--android:showDefault	布尔值是否显示默认铃声-->
+    <!--android:showSilent	布尔值是否显示静音-->
+    <RingtonePreference
+        android:key="key_RingtonePreference"
+        android:ringtoneType="all"
+        android:showDefault="true"
+        android:showSilent="true"
+        android:summary="RingPreference (铃声设置)"
+        android:title="RingtonePreference"
+        />
+    <!--android:order 首选项的顺序(较低的值在前面)-->
+    <EditTextPreference
+        android:dialogIcon="@mipmap/ic_launcher"
+        android:key="key_EditTextPreference"
+        android:order="1"
+        android:summary="EditTextPreference 输入框"
+        android:title="EditTextPreference"/>
+    <Preference
+        android:key="key_Preference"
+        android:summary="please Click me"
+        android:title="Preference Click Test"
+        />
+
+</PreferenceScreen>
