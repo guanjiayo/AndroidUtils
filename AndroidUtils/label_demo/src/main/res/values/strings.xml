@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Label_Demo</string>
+    <string name="include">include标签</string>
+    <string name="merge">merge标签</string>
+    <string name="viewstub">ViewStub标签</string>
+    <string name="textview">TextView</string>
+    <string name="button">button</string>
+    <string name="divide">当分割线用,哈哈!</string>
+    <string name="refresh">hide</string>
+    <string name="show">show</string>
+    <string name="network_miss">网络有误</string>
+    <string name="network_refresh">刷新网络</string>
+</resources>

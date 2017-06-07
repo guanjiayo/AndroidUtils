@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <!--测试layout和<include>都设置ID的情况-->
+    <include
+        android:id="@+id/tb_toolbar"
+        layout="@layout/include_toolbar"/>
+
+    <!--如果只有单个include 这样写就可以,加载的布局的子View,直接findViewByID就能找到-->
+    <include layout="@layout/include_text"/>
+
+    <!--如果有多个include,需要添加ID属性-->
+    <include
+        android:id="@+id/include_text1"
+        layout="@layout/include_text"/>
+
+    <!--这个layout用RelativeLayout 实现-->
+    <!--如果要使用layout_margin这样的属性,要同时加上layout_w/h属性,不然没反应-->
+    <include
+        android:id="@+id/include_text2"
+        layout="@layout/include_text_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"/>
+
+
+</LinearLayout>

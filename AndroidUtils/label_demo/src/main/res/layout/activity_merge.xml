@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--直接将LinearLayout 改成 merge测试即可-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="zs.xmx.MergeActivity">
+
+    <include layout="@layout/merge_test"/>
+
+</LinearLayout>

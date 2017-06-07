@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="zs.xmx.ViewStubActivity">
+
+    <!--android:inflateId：重写ViewStub的父布局控件的Id-->
+    <!--android:layout：设置ViewStub被inflate的布局-->
+    <ViewStub
+        android:id="@+id/network_error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/viewstub_test"
+        android:layout="@layout/viewstub_test"/>
+
+    <Button
+        android:id="@+id/btn_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="show"
+        android:text="@string/show"/>
+
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_show"
+        android:onClick="refresh"
+        android:text="@string/refresh"/>
+
+</RelativeLayout>

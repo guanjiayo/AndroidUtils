@@ -1,1 +1,1 @@
-include ':app', ':prefenence'
+include ':app', ':prefenence', ':label_demo'
