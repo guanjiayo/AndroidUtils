@@ -12,12 +12,36 @@ import java.util.Stack;
  * @创建时间   2016/9/4 20:51
  * @本类描述	  Activity管理工具类
  * @内容说明   主要用于项目Activity的管理(增删)
- *      
+ *
+ *
+ *
  */
+
+/**
+ * 使用:
+ * <p>
+ * 如果我们要更加方便的是用这个管理类，推荐创建一个Activity的基类，并在onCreate和onDestory方法里面调用对应的方法，这样我们就不需要单独在某个Activity里面添加重复逻辑，精简代码，比如像下面这样
+ * <p>
+ * /**
+ * 对context进行初始化，并将当前的Activity加入到堆栈中，便于管理
+ *
+ * @Override protected void onCreate(Bundle savedInstanceState){
+ * super.onCreate(savedInstanceState);
+ * <p>
+ * // 添加Activity到堆栈
+ * AppManager.getAppManager().addActivity(this);
+ * <p>
+ * }
+ * @Override protected void onDestroy(){
+ * super.onDestroy();
+ * // 结束Activity&从堆栈中移除
+ * AppManager.getAppManager().finishActivity(this);
+ * }
+ */
+
 public class ActivityManager {
     private static Stack<Activity> activityStack;
     private static ActivityManager instance;
-
 
     /**
      * 单一实例:创建的类不会多次new,不占用资源

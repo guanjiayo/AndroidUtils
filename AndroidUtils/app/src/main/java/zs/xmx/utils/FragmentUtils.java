@@ -6,10 +6,16 @@ package zs.xmx.utils;
  * @本类描述	  Fragment工具类
  * @内容说明   ${TODO}拆分,稍微更改下,自己写一个吧,无用的东西太多
  * @补充内容
+ *       //TODO 使用:
+ *       1.在外部用数组,通过角标管理Fragment类
+ *       2.取巧:addFragment() 要"0"作tag
+ *       3.修改后配合FragmentFactory,在HomeActivity使用
  *
  * ---------------------------------     
  * @更新时间   
- * @新增内容   
+ * @新增内容
+ *
+ *
  *
  */
 
