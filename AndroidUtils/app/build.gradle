@@ -27,19 +27,18 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
 
-    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-//    权限机制,插件方法
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    //    权限机制,插件方法
     compile('com.github.hotchemi:permissionsdispatcher:2.4.0') {
         exclude module: "support-v13"
     }
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

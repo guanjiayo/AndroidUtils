@@ -1,4 +1,4 @@
-package zs.xmx.utils;
+package zs.xmx.keyboard;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +32,9 @@ import android.widget.EditText;
 public class KeyboardUtils {
     /**
      * <--->
-     *     android:windowSoftInputMode属性:
+     *     静态方式,调整android:windowSoftInputMode属性
+     *
+     *     android:windowSoftInputMode属性(定义显示Actvity时该Activtiy所需的默认软输入状态):
      *
      *     这个属性能影响两个事情:
      *     【一】当有焦点产生时，软键盘是隐藏还是显示
@@ -49,9 +51,16 @@ public class KeyboardUtils {
      *     【7】adjustUnspecified：默认设置，通常由系统自行决定是隐藏还是显示
      *     【8】adjustResize：该Activity总是调整屏幕的大小以便留出软键盘的空间
      *     【9】adjustPan：当前窗口的内容将自动移动以便当前焦点从不被键盘覆盖和用户能总是看到输入内容的部分
+     *     【10】adjustNothing: 不调整窗口大小或平移窗口,软键盘就默认显示,会覆盖后面内容
 
      *
      * </--->
+     *
+     * 1.对于我们编写自己的文本编辑器的罕见的人，您需要实现onCreateInputConnection（EditorInfo）
+     * 来返回一个您自己的InputConnection接口的新实例，允许IME与编辑器交互。
+     *
+     * 2.输入法作为Service实现,来自于InputMethodService
+     *
      */
 
     /**
