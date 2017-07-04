@@ -29,7 +29,7 @@ import android.widget.EditText;
  * @更新时间   2016/9/25 
  * @更新说明
  */
-public class KeyboardUtils {
+public class KeyboardToggleUtils {
     /**
      * <--->
      *     静态方式,调整android:windowSoftInputMode属性
