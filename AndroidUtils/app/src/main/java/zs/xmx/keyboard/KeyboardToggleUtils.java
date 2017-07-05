@@ -5,7 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+
+import zs.xmx.utils.Utils;
 
 /*
  * @创建者     默小铭
@@ -74,78 +75,81 @@ public class KeyboardToggleUtils {
      */
 
     /**
+     * 动态显示软键盘
+     *
+     * @param activity activity
+     */
+    public static void showSoftInput(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view == null) view = new View(activity);
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    }
+
+    /**
+     * 动态显示软键盘
+     *
+     * @param view 视图
+     */
+    public static void showSoftInput(View view) {
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        InputMethodManager imm = (InputMethodManager) Utils.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    }
+
+    /**
      * 动态隐藏软键盘
-     * <p>
-     * inputmanger.hideSoftInputFromWindow(windowToken, flags);
-     * <p>
-     * 参数:
-     * windowToken 由窗口请求View.getWindowToken() 返回得到的令牌(token)
-     * flags 提供额外的操作标志.(0 ; HIDE_IMPLICIT_ONLY )
      *
      * @param activity activity
      */
     public static void hideSoftInput(Activity activity) {
-        //得到最上层的window
-        View view = activity.getWindow().peekDecorView();
-        if (view != null) {
-            InputMethodManager inputmanger = (InputMethodManager) activity
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        View view = activity.getCurrentFocus();
+        if (view == null) view = new View(activity);
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**
-     * EditView 动态隐藏软键盘
+     * 动态隐藏软键盘
      *
-     * @param context 上下文
-     * @param edit    输入框
+     * @param view 视图
      */
-    public static void hideSoftInput(Context context, EditText edit) {
-        edit.clearFocus();
-        InputMethodManager inputmanger = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputmanger.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+    public static void hideSoftInput(View view) {
+        InputMethodManager imm = (InputMethodManager) Utils.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**
-     * 点击屏幕空白区域隐藏软键盘（方法1）
-     * <p>
-     * 在onTouch中处理，未获焦点则隐藏
-     * <p>
-     * 参照以下注释代码
+     * 切换键盘显示与否状态
      */
-    public static void clickBlankArea2HideSoftInput0() {
-        Log.i("tips", "U should copy the following code.");
-        /*
-        @Override
-        public boolean onTouchEvent (MotionEvent event){
-            if (null != this.getCurrentFocus()) {
-                InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
-            }
-            return super.onTouchEvent(event);
-        }
-        */
+    public static void toggleSoftInput() {
+        InputMethodManager imm = (InputMethodManager) Utils.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     /**
-     * 点击屏幕空白区域隐藏软键盘（方法2）
-     * <p>
-     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘
-     * <p>
-     * 需重写dispatchTouchEvent
-     * <p>
-     * 参照以下注释代码
+     * 点击屏幕空白区域隐藏软键盘
+     * <p>根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘</p>
+     * <p>需重写dispatchTouchEvent</p>
+     * <p>参照以下注释代码</p>
      */
-    public static void clickBlankArea2HideSoftInput1() {
-        Log.i("tips", "U should copy the following code.");
+    public static void clickBlankArea2HideSoftInput() {
+        Log.d("tips", "U should copy the following code.");
         /*
         @Override
         public boolean dispatchTouchEvent(MotionEvent ev) {
             if (ev.getAction() == MotionEvent.ACTION_DOWN) {
                 View v = getCurrentFocus();
                 if (isShouldHideKeyboard(v, ev)) {
-                    hideKeyboard(v.getWindowToken());
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
             }
             return super.dispatchTouchEvent(ev);
@@ -165,52 +169,6 @@ public class KeyboardToggleUtils {
             }
             return false;
         }
-
-        // 获取InputMethodManager，隐藏软键盘
-        private void hideKeyboard(IBinder token) {
-            if (token != null) {
-                InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        }
         */
     }
-
-    /**
-     * EditText 动态显示软键盘
-     * <p>
-     * inputManager.showSoftInput(view, flags);
-     * <p>
-     * 参数:
-     * view 当前焦点视图
-     * flags 提供额外的操作标志(0 ; SHOW_IMPICIT)
-     *
-     * @param context 上下文
-     * @param edit    输入框
-     */
-    public static void showSoftInput(Context context, EditText edit) {
-        edit.setFocusable(true);
-        edit.setFocusableInTouchMode(true);
-        edit.requestFocus();
-        InputMethodManager inputManager = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(edit, 0);
-    }
-
-    /**
-     * 切换键盘显示与否状态( EditText 切换软键盘显示)
-     *
-     * @param context 上下文
-     * @param edit    输入框
-     */
-    public static void toggleSoftInput(Context context, EditText edit) {
-        edit.setFocusable(true);
-        edit.setFocusableInTouchMode(true);
-        edit.requestFocus();
-        InputMethodManager inputManager = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
-
-
 }
