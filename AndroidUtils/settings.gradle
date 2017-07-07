@@ -1,1 +1,1 @@
-include ':app', ':prefenence', ':label_demo'
+include ':app', ':prefenence', ':label_demo', ':statusbar_demo'

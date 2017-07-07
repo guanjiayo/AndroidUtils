@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/label_demo" />
             <option value="$PROJECT_DIR$/prefenence" />
+            <option value="$PROJECT_DIR$/statusbar_demo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
