@@ -10,7 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="toSettingPreferenceActivity"
-        android:text="PreferenceActivity实现的Setting界面"/>
+        android:text="PreferenceActivity结合标头实现的设置界面"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="下方为NormalPreferenceFragement"
+        />
 
     <FrameLayout
         android:id="@+id/fl_content"
