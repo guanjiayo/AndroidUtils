@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+
+
+android {
+
+    //渠道名称
+    productFlavors {
+        develop {}
+        xiaomi {}
+        huawei {}
+        anzhi {}
+    }
+    //修改生成的apk名称
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                //这里修改apk文件名 def fileName="自定义名称"
+                def fileName = outputFile.name.replace("app", "${variant.productFlavors[0].name}_${defaultConfig.applicationId}_${defaultConfig.versionName}")
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+    //新建 config.gradle 文件方式:
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        //配置 moudle 的 build.gradle 方式,直接定义变量名声明
+        final Version_Code = '1'
+        final Version_Name = '1.0'
+        versionCode Version_Code as int
+        versionName Version_Name
+        //配置 gradle.properties 方式
+        applicationId ANDROID_APPLICATION_ID
+        minSdkVersion ANDROID_MIN_SDK_VERSION as int
+        targetSdkVersion ANDROID_TARGET_SDK_VERSION as int
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile rootProject.ext.dependencies["support-v7"]
+    testCompile 'junit:junit:4.12'
+    //配置 app 的 build.gradle 方式
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+}
+
+
