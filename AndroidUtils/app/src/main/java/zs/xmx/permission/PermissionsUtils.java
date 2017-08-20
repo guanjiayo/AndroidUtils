@@ -12,8 +12,8 @@ package zs.xmx.permission;
  *             使用:
  *             1.在清单文件声明权限
  *             2.在对应业务调用申请权限方法
- *                 requestPermission()
- *                 requestALLPermission()
+ *                 PermissionsUtils.requestPermission()
+ *                 PermissionsUtils.requestALLPermission()
  *             3.在申请权限的页面(Activity:this,Fragment:getActivity或View:getContext),
  *             在onRequestPermissionsResult()调用
  *
