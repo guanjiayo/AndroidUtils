@@ -12,7 +12,7 @@ package zs.xmx.permission;
  *             使用:
  *             1.在清单文件声明权限
  *             2.在对应业务调用申请权限方法
- *                requestPermission()
+ *                 requestPermission()
  *                 requestALLPermission()
  *             3.在申请权限的页面(Activity:this,Fragment:getActivity或View:getContext),
  *             在onRequestPermissionsResult()调用
@@ -453,6 +453,60 @@ public class PermissionsUtils {
             }
         });
     }
-
+/**特殊权限**/
+ //清单文件先声明权限,在Activty中实现下面代码:
+//
+//    /**
+//     * 悬浮窗权限
+//     * <p>
+//     * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
+//     * <p>
+//     * 使用"package:" + getPackageName()携带App的包名信息
+//     * <p>
+//     * 使用Settings.canDrawOverlays方法判断授权结果
+//     *
+//     * @param view
+//     */
+//    public void Floating_window(View view) {
+//        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+//        intent.setData(Uri.parse("package:" + getPackageName()));
+//        startActivityForResult(intent, REQUEST_Floating_WINDOW);
+//    }
+//
+//    /**
+//     * 系统设置
+//     * <p>
+//     * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
+//     * <p>
+//     * 使用"package:" + getPackageName()携带App的包名信息
+//     * <p>
+//     * 使用Settings.System.canWrite方法检测授权结果
+//     *
+//     * @param view
+//     */
+//    public void System_Setting(View view) {
+//        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+//        intent.setData(Uri.parse("package:" + getPackageName()));
+//        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+//    }
+//
+//    private static final int REQUEST_Floating_WINDOW     = 1;
+//    private static final int REQUEST_CODE_WRITE_SETTINGS = 2;
+//
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_Floating_WINDOW) {
+//            if (Settings.canDrawOverlays(this)) {
+//                Logger.i(TAG, "onActivityResult granted");
+//            }
+//        }
+//        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
+//            if (Settings.System.canWrite(this)) {
+//                Logger.i(TAG, "onActivityResult write settings granted");
+//            }
+//        }
+//    }
 
 }
