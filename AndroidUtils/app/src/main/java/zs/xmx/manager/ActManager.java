@@ -29,26 +29,26 @@ import java.util.Stack;
  * super.onCreate(savedInstanceState);
  * <p>
  * // 添加Activity到堆栈
- * AppManager.getAppManager().addActivity(this);
+ * ActManager.getAppManager().addActivity(this);
  * <p>
  * }
  * @Override protected void onDestroy(){
  * super.onDestroy();
  * // 结束Activity&从堆栈中移除
- * AppManager.getAppManager().finishActivity(this);
+ * ActManager.getAppManager().finishActivity(this);
  * }
  */
 
-public class ActivityManager {
+public class ActManager {
     private static Stack<Activity> activityStack;
-    private static ActivityManager instance;
+    private static ActManager      instance;
 
     /**
      * 单一实例:创建的类不会多次new,不占用资源
      */
-    public static ActivityManager getInstance() {
+    public static ActManager getInstance() {
         if (instance == null) {
-            instance = new ActivityManager();
+            instance = new ActManager();
         }
         return instance;
     }
