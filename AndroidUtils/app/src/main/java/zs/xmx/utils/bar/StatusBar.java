@@ -24,6 +24,9 @@ import android.widget.LinearLayout;
  *              1.设置状态栏颜色要写在setContentView(..)后面
  *              2.两个重要属性要写在状态栏要跟随颜色的控件上
  *
+ *              //TODO 新增状态栏颜色跟随include的ActionBar颜色
+ *              //TODO setStatusBarColor 怎么导R.color文件
+ *
  * ---------------------------------
  * @新增内容
  *
@@ -35,7 +38,7 @@ public class StatusBar {
      * 可在Activity的onCreat()中调用
      * <p>
      * 注意:需在顶部控件布局中加入以下属性让内容出现在状态栏之下:
-     * android:clipToPadding="true"   // true 会贴近上层布局 ; false 与上层布局有一定间隙
+     * android:clipToPadding="true"     // true 会贴近上层布局 ; false 与上层布局有一定间隙
      * android:fitsSystemWindows="true"   //true 会保留actionBar,title,虚拟键的空间 ; false 不保留
      *
      * @param activity activity
