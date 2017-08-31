@@ -67,7 +67,11 @@ public class PermissionsActivity extends AppCompatActivity {
     }
 
     public void Mutli(View view) {
-        PermissionsUtils.requestMultiPermission(this, new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, mOnPermissionListener);
+        PermissionsUtils.requestMultiPermission(this,
+                new String[]{Manifest.permission.CALL_PHONE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO},
+                mOnPermissionListener);
     }
 
     public void ALL(View view) {
@@ -152,6 +156,7 @@ public class PermissionsActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionsUtils.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        /**实际开发不用写这个,我们测试监听而已**/
         for (int i = 0; i < grantResults.length; i++) {
             boolean isTip = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i]);
             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {

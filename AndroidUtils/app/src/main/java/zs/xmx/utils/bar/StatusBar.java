@@ -103,7 +103,7 @@ public class StatusBar {
      * 2.添加一个自定义颜色的View覆盖状态栏
      *
      * @param activity
-     * @param argb
+     * @param argb getResources().getColor(R.color.colorPrimary)
      */
     public static void setStatusBarColor(Activity activity, int argb) {
         setTransparentStatusBar(activity);
