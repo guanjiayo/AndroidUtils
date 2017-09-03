@@ -6,6 +6,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ import java.util.List;
 public class Utils {
 
     @SuppressLint("StaticFieldLeak")
-    private static Application sApplication;
-
+    private static Application             sApplication;
+    static         WeakReference<Activity> sTopActivityWeakRef;
     static List<Activity> sActivityList = new LinkedList<>();
     @SuppressLint("StaticFieldLeak")
     static Activity sTopActivity;
@@ -76,7 +77,7 @@ public class Utils {
     /**
      * 初始化工具类
      *
-     * @param app 应用
+     * @param app Application类
      */
     public static void init(@NonNull final Application app) {
         Utils.sApplication = app;
@@ -85,6 +86,10 @@ public class Utils {
 
     /**
      * 获取Application
+     * <p>
+     * 相当于getApplicationCotext()
+     * <p>
+     * 这里主要为了避免部分不能使用getApplicationContext()的情况
      *
      * @return Application
      */
@@ -92,5 +97,16 @@ public class Utils {
         if (sApplication != null)
             return sApplication;
         throw new NullPointerException("u should init first");
+    }
+
+    /**
+     * 设置Activity为弱引用
+     *
+     * @param activity
+     */
+    private static void setTopActivityWeakRef(Activity activity) {
+        if (sTopActivityWeakRef == null || !activity.equals(sTopActivityWeakRef.get())) {
+            sTopActivityWeakRef = new WeakReference<>(activity);
+        }
     }
 }

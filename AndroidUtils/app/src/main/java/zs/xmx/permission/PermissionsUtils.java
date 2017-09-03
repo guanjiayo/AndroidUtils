@@ -2,7 +2,7 @@ package zs.xmx.permission;
 /*
  * @创建者     mqm
  * @博客       http://blog.csdn.net/u012792686
- * @创建时间   2017/5/23
+ * @创建时间   2017/9/04
  * @本类描述	  Android 6.0 动态申请权限工具类
  * @内容说明     1.申请对应权限
  *              2.申请所有权限
@@ -32,9 +32,9 @@ package zs.xmx.permission;
 
  * ---------------------------------     
  * @更新时间   
- * @新增内容   //TODO   PermissionsUtils 新增方法,不回调 OnPermissionListener
- *            //TODO 判断是否是要处理的危险权限,把上面定义的变量用数组写
- *            //TODO Mutil 写一个方法可以传PermissionGroup,或提示不能传
+ * @新增内容
+ *
+ *
  *
  */
 
@@ -61,31 +61,31 @@ import zs.xmx.utils.Logger;
 public class PermissionsUtils {
 
     //请求码(2017目前的动态权限,后续有更新继续补充)
-    public static final int CODE_WRITE_CONTACTS         = 0;
-    public static final int CODE_GET_ACCOUNTS           = 1;
-    public static final int CODE_READ_CONTACTS          = 2;
-    public static final int CODE_READ_CALL_LOG          = 3;
-    public static final int CODE_READ_PHONE_STATE       = 4;
-    public static final int CODE_CALL_PHONE             = 5;
-    public static final int CODE_WRITE_CALL_LOG         = 6;
-    public static final int CODE_USE_SIP                = 7;
-    public static final int CODE_PROCESS_OUTGOING_CALLS = 8;
-    public static final int CODE_READ_CALENDAR          = 9;
-    public static final int CODE_WRITE_CALENDAR         = 10;
-    public static final int CODE_CAMERA                 = 11;
-    public static final int CODE_BODY_SENSORS           = 12;
-    public static final int CODE_ACCESS_FINE_LOCATION   = 13;
-    public static final int CODE_ACCESS_COARSE_LOCATION = 14;
-    public static final int CODE_READ_EXTERNAL_STORAGE  = 15;
-    public static final int CODE_WRITE_EXTERNAL_STORAGE = 16;
-    public static final int CODE_RECORD_AUDIO           = 17;
-    public static final int CODE_READ_SMS               = 18;
-    public static final int CODE_RECEIVE_WAP_PUSH       = 19;
-    public static final int CODE_RECEIVE_MMS            = 20;
-    public static final int CODE_RECEIVE_SMS            = 21;
-    public static final int CODE_SEND_SMS               = 22;
-    public static final int CODE_ALL_PERMISSION         = 100;
-    public static final int CODE_Mutil_PERMISSION       = 200;
+    public static final  int CODE_WRITE_CONTACTS         = 0;
+    public static final  int CODE_GET_ACCOUNTS           = 1;
+    public static final  int CODE_READ_CONTACTS          = 2;
+    public static final  int CODE_READ_CALL_LOG          = 3;
+    public static final  int CODE_READ_PHONE_STATE       = 4;
+    public static final  int CODE_CALL_PHONE             = 5;
+    public static final  int CODE_WRITE_CALL_LOG         = 6;
+    public static final  int CODE_USE_SIP                = 7;
+    public static final  int CODE_PROCESS_OUTGOING_CALLS = 8;
+    public static final  int CODE_READ_CALENDAR          = 9;
+    public static final  int CODE_WRITE_CALENDAR         = 10;
+    public static final  int CODE_CAMERA                 = 11;
+    public static final  int CODE_BODY_SENSORS           = 12;
+    public static final  int CODE_ACCESS_FINE_LOCATION   = 13;
+    public static final  int CODE_ACCESS_COARSE_LOCATION = 14;
+    public static final  int CODE_READ_EXTERNAL_STORAGE  = 15;
+    public static final  int CODE_WRITE_EXTERNAL_STORAGE = 16;
+    public static final  int CODE_RECORD_AUDIO           = 17;
+    public static final  int CODE_READ_SMS               = 18;
+    public static final  int CODE_RECEIVE_WAP_PUSH       = 19;
+    public static final  int CODE_RECEIVE_MMS            = 20;
+    public static final  int CODE_RECEIVE_SMS            = 21;
+    public static final  int CODE_SEND_SMS               = 22;
+    private static final int CODE_ALL_PERMISSION         = 100;
+    private static final int CODE_Mutil_PERMISSION       = 200;
 
     //危险权限9组,25个权限(需要动态申请),每组只要有一个权限申请成功,默认整组权限都能用
     //联系人权限
@@ -179,6 +179,7 @@ public class PermissionsUtils {
             Logger.i(TAG, "非法的请求码(不是需要动态申请的权限)");
             return;
         }
+
         final String requestPermission = requestPermissions[requestCode];
         if (ActivityCompat.checkSelfPermission(activity, requestPermission) != PackageManager.PERMISSION_GRANTED) {
             //判断权限是否被彻底禁止,首次调用或彻底禁止调用requestPermissions; 没有彻底禁止调用shouldShowRequestPermissionRationale
@@ -226,8 +227,16 @@ public class PermissionsUtils {
         Logger.i(TAG, "requestMultiPermissions permissionsList:" + permissionsList.size() + ",shouldRationalePermissionsList:" + shouldRationalePermissionsList.size());
 
         if (permissionsList.size() > 0) {
-            ActivityCompat.requestPermissions(activity, permissionsList.toArray(new String[permissionsList.size()]),
-                    CODE_Mutil_PERMISSION);
+            for (int i = 0; i < requestPermissions.length; i++) {
+                for (int j = 0; j < mutilPermissionList.length; j++) {
+                    if (mutilPermissionList[j].equals(requestPermissions[i])) {
+                        Logger.i(TAG, mutilPermissionList[j]);
+                        ActivityCompat.requestPermissions(activity, permissionsList.toArray(new String[permissionsList.size()]),
+                                CODE_Mutil_PERMISSION);
+                    }
+                }
+            }
+
         } else if (shouldRationalePermissionsList.size() > 0) {
             showMessageOKCancel(activity, "这些权限需要授权",
                     new DialogInterface.OnClickListener() {
@@ -336,15 +345,19 @@ public class PermissionsUtils {
             String mutilPermission = mutilPermissionList[i];
 
             if (ActivityCompat.checkSelfPermission(activity, mutilPermission) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, mutilPermission)) {
-                    if (isShouldRationale) {
-                        permissions.add(mutilPermission);
-                    }
+                try {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(activity, mutilPermission)) {
+                        if (isShouldRationale) {
+                            permissions.add(mutilPermission);
+                        }
 
-                } else {
-                    if (!isShouldRationale) {
-                        permissions.add(mutilPermission);
+                    } else {
+                        if (!isShouldRationale) {
+                            permissions.add(mutilPermission);
+                        }
                     }
+                } catch (Exception e) {
+                    Logger.i(TAG,e.getMessage());
                 }
 
             }

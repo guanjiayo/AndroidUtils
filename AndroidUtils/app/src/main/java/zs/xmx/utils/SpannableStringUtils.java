@@ -720,7 +720,7 @@ public class SpannableStringUtils {
             }
             if (imageIsBitmap || imageIsDrawable || imageIsUri || imageIsResourceId) {
                 if (imageIsBitmap) {
-                    mBuilder.setSpan(new CustomImageSpan(Utils.getContext(), bitmap, align), start, end, flag);
+                    mBuilder.setSpan(new CustomImageSpan(Utils.getApp(), bitmap, align), start, end, flag);
                     bitmap = null;
                     imageIsBitmap = false;
                 } else if (imageIsDrawable) {
@@ -728,11 +728,11 @@ public class SpannableStringUtils {
                     drawable = null;
                     imageIsDrawable = false;
                 } else if (imageIsUri) {
-                    mBuilder.setSpan(new CustomImageSpan(Utils.getContext(), uri, align), start, end, flag);
+                    mBuilder.setSpan(new CustomImageSpan(Utils.getApp(), uri, align), start, end, flag);
                     uri = null;
                     imageIsUri = false;
                 } else {
-                    mBuilder.setSpan(new CustomImageSpan(Utils.getContext(), resourceId, align), start, end, flag);
+                    mBuilder.setSpan(new CustomImageSpan(Utils.getApp(), resourceId, align), start, end, flag);
                     resourceId = 0;
                     imageIsResourceId = false;
                 }

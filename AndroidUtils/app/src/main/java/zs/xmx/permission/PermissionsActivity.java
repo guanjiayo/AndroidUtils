@@ -134,9 +134,9 @@ public class PermissionsActivity extends AppCompatActivity {
     PermissionsUtils.OnPermissionListener mOnPermissionListener = new PermissionsUtils.OnPermissionListener() {
         @Override
         public void onPermissionGranted(int requestCode) {
-            if (requestCode == PermissionsUtils.CODE_ALL_PERMISSION) {
+            if (requestCode == 100) {
                 Toast.makeText(PermissionsActivity.this, requestCode + " permission Granted", Toast.LENGTH_SHORT).show();
-            } else if (requestCode == PermissionsUtils.CODE_Mutil_PERMISSION) {
+            } else if (requestCode == 200) {
                 Toast.makeText(PermissionsActivity.this, requestCode + " permission Granted", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(PermissionsActivity.this, PermissionsUtils.requestPermissions[requestCode] + " permission Granted", Toast.LENGTH_SHORT).show();
@@ -175,4 +175,6 @@ public class PermissionsActivity extends AppCompatActivity {
     public void plugin(View view) {
         startActivity(new Intent(this, PermissionsPluginActivity.class));
     }
+
+
 }
