@@ -166,6 +166,20 @@ public class PermissionsUtils {
     /**
      * 申请单个权限
      * <p>
+     * 只申请权限,不对某个请求的权限返回码作处理
+     *
+     * @param activity
+     * @param requestCode
+     */
+    public static void requestPermission(final Activity activity, final int requestCode) {
+        requestPermission(activity, requestCode, null);
+
+    }
+
+
+    /**
+     * 申请单个权限
+     * <p>
      * 部分机型修改过Rom,如小米4,shouldShowRequestPermissionRationale会一直返回false
      *
      * @param activity    上下文
@@ -203,6 +217,19 @@ public class PermissionsUtils {
             if (mOnPermissionListener != null)
                 mOnPermissionListener.onPermissionGranted(requestCode);
         }
+
+    }
+
+    /**
+     * 申请多个权限
+     * <p>
+     * 只申请权限,不对某个请求的权限返回码作处理
+     *
+     * @param activity
+     * @param mutilPermissionList
+     */
+    public static void requestMultiPermission(final Activity activity, final String[] mutilPermissionList) {
+        requestMultiPermission(activity, mutilPermissionList, null);
 
     }
 
@@ -254,6 +281,19 @@ public class PermissionsUtils {
         }
 
     }
+
+    /**
+     * 申请全部权限
+     * <p>
+     * 只申请权限,不对某个请求的权限返回码作处理
+     *
+     * @param activity
+     */
+    public static void requestAllPermissions(final Activity activity) {
+        requestAllPermissions(activity, null);
+
+    }
+
 
     /**
      * 申请全部权限
@@ -357,7 +397,7 @@ public class PermissionsUtils {
                         }
                     }
                 } catch (Exception e) {
-                    Logger.i(TAG,e.getMessage());
+                    Logger.i(TAG, e.getMessage());
                 }
 
             }
