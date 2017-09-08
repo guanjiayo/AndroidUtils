@@ -1,1 +1,1 @@
-include ':app', ':prefenence', ':label_demo', ':statusbar_demo', ':gradleTest'
+include ':app', ':prefenence', ':label_demo', ':statusbar_demo', ':gradleTest', ':keyboard_demo'

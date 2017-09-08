@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="zs.xmx.activity.ImeOptions_keyboardActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="text 文本"
+                android:inputType="text"/>
+
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textCapWords 单词首字母大写"
+                android:inputType="textCapWords"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textCapCharacters 字母大写"
+                android:inputType="textCapCharacters"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textCapSentences 仅第一字母大写"
+                android:inputType="textCapSentences"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textMultiLine 多行输入(设置了imeOptions可用)"
+                android:imeOptions="actionGo"
+                android:inputType="textMultiLine"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textImeMultiLine 多行输入(需要输入法支持)"
+                android:inputType="textImeMultiLine"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textEmailAddress 邮件地址"
+                android:inputType="textEmailAddress"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textEmailSubject 邮件主题"
+                android:inputType="textEmailSubject"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textLongMessage 短信长内容"
+                android:inputType="textLongMessage"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textShortMessage 短内容(会多一个表情按钮)"
+                android:inputType="textShortMessage"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="text UrI"
+                android:inputType="textUri"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textAutoComplete 文本自动补全"
+                android:inputType="textAutoComplete"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textAutoCorrect 文本自动修正"
+                android:inputType="textAutoCorrect"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textFilter 文本筛选过滤"
+                android:inputType="textFilter"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textPassword 密码"
+                android:inputType="textPassword"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textPersonName 人名"
+                android:inputType="textPersonName"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="textPhonetic 拼音输入"
+                android:inputType="textPhonetic"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="phone 电话号码"
+                android:inputType="phone"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="date 日期"
+                android:inputType="date"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="time 时间"
+                android:inputType="time"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="datetime 日期时间"
+                android:inputType="datetime"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="number 数字"
+                android:inputType="number"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="numberDecimal 允许数字带小数"
+                android:inputType="numberDecimal"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="numberPassword 数字密码"
+                android:inputType="numberPassword"/>
+
+            <EditText
+                style="@style/layout_mw"
+                android:hint="number 数字签名"
+                android:inputType="numberSigned"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

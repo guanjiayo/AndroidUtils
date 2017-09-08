@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="zs.xmx">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- 静态设置输入模式 -->
+
+        <!-- android:windowSoftInputMode="adjustResize" -->
+        <activity
+            android:name=".activity.AdjustResize_KeyboardActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!-- android:windowSoftInputMode="adjustPan" -->
+        <activity
+            android:name=".activity.AdjustPan_KeyboardActivity"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".activity.Scroll_keyboardActivity"/>
+
+        <activity
+            android:name=".activity.ScrollViewByLayoutActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".activity.StatusBarFail_KeyboardActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".activity.ScrollViewByClassActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".activity.KeyboardToggleActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name=".activity.ImeOptions_keyboardActivity">
+        </activity>
+        <activity android:name=".activity.InputType_KeyboardActivity"
+            >
+        </activity>
+    </application>
+
+</manifest>

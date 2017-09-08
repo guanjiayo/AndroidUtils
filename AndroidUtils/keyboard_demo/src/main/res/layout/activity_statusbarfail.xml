@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--android:fitsSystemWindows="true"-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="zs.xmx.activity.StatusBarFail_KeyboardActivity">
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框1"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框2"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框3"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框4"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框5"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框6"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框7"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框8"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框9"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框10"/>
+
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框11"/>
+
+            <EditText
+                style="@style/editext_input_style"
+                android:hint="输入框12"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
