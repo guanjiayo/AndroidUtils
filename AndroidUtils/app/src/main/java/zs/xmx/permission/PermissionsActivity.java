@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import zs.xmx.R;
+import zs.xmx.constant.PermissionsContants;
 import zs.xmx.utils.Logger;
 
 import static android.provider.Settings.canDrawOverlays;
@@ -32,48 +33,54 @@ public class PermissionsActivity extends AppCompatActivity {
     }
 
     public void RECORD_AUDIO(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_RECORD_AUDIO, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_RECORD_AUDIO, mOnPermissionListener);
     }
 
     public void ACCOUNTS(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_GET_ACCOUNTS, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_GET_ACCOUNTS, mOnPermissionListener);
     }
 
 
     public void CALL_PHONE(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_CALL_PHONE, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_CALL_PHONE, mOnPermissionListener);
     }
 
     public void FINE_LOCATION(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_ACCESS_FINE_LOCATION, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_ACCESS_FINE_LOCATION, mOnPermissionListener);
     }
 
     public void WRITE_EXTERNAL_STORAGE(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_WRITE_EXTERNAL_STORAGE, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_WRITE_EXTERNAL_STORAGE, mOnPermissionListener);
     }
 
     public void camera(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_CAMERA, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_CAMERA, mOnPermissionListener);
     }
 
     public void READ_CALENDAR(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_READ_CALENDAR, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_READ_CALENDAR, mOnPermissionListener);
     }
 
     public void SENSORS(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_BODY_SENSORS, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_BODY_SENSORS, mOnPermissionListener);
     }
 
     public void SMS(View view) {
-        PermissionsUtils.requestPermission(this, PermissionsUtils.CODE_SEND_SMS, mOnPermissionListener);
+        PermissionsUtils.requestPermission(this, PermissionsContants.CODE_SEND_SMS, mOnPermissionListener);
     }
 
     public void Mutli(View view) {
         PermissionsUtils.requestMultiPermission(this,
                 new String[]{Manifest.permission.CALL_PHONE,
                         Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO},
+                        Manifest.permission.RECORD_AUDIO,},
                 mOnPermissionListener);
+    }
+
+    public void Group(View view) {
+
+        PermissionsUtils.requestPermissionGroup(this, PermissionsContants.LOCATION_GROUP);
+
     }
 
     public void ALL(View view) {
@@ -166,7 +173,7 @@ public class PermissionsActivity extends AppCompatActivity {
             } else if (requestCode == 200) {
                 Toast.makeText(PermissionsActivity.this, requestCode + " permission Granted", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(PermissionsActivity.this, PermissionsUtils.requestPermissions[requestCode] + " permission Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PermissionsActivity.this, PermissionsContants.requestPermissions[requestCode] + " permission Granted", Toast.LENGTH_SHORT).show();
 
             }
         }

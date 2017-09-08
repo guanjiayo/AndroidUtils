@@ -81,6 +81,12 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="Group"
+                android:text="申请一组权限(Location)"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:onClick="ALL"
                 android:text="申请所有权限"/>
             <Button

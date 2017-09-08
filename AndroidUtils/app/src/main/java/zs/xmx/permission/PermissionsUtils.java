@@ -36,13 +36,12 @@ package zs.xmx.permission;
  *          3. BluetoothLeScanner.startScan()
  *
  *    TODO 在调用申请蓝牙,wifi上述第8点时,写一个检测是否调用 ACCESS_FINE_LOCATION 或者 ACCESS_COARSE_LOCATION权限,否,让用户手动设置
- *
+ *    todo requestMutil 申请权限在genymotion 6.0 会申请3次
  *
  *
  *
  */
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -53,6 +52,7 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,96 +63,11 @@ import java.util.Map;
 import zs.xmx.utils.DialogUtils;
 import zs.xmx.utils.Logger;
 
+import static zs.xmx.constant.PermissionsContants.CODE_ALL_PERMISSION;
+import static zs.xmx.constant.PermissionsContants.CODE_Mutil_PERMISSION;
+import static zs.xmx.constant.PermissionsContants.requestPermissions;
 
 public class PermissionsUtils {
-
-    //请求码(2017目前的动态权限,后续有更新继续补充)
-    public static final  int CODE_WRITE_CONTACTS         = 0;
-    public static final  int CODE_GET_ACCOUNTS           = 1;
-    public static final  int CODE_READ_CONTACTS          = 2;
-    public static final  int CODE_READ_CALL_LOG          = 3;
-    public static final  int CODE_READ_PHONE_STATE       = 4;
-    public static final  int CODE_CALL_PHONE             = 5;
-    public static final  int CODE_WRITE_CALL_LOG         = 6;
-    public static final  int CODE_USE_SIP                = 7;
-    public static final  int CODE_PROCESS_OUTGOING_CALLS = 8;
-    public static final  int CODE_READ_CALENDAR          = 9;
-    public static final  int CODE_WRITE_CALENDAR         = 10;
-    public static final  int CODE_CAMERA                 = 11;
-    public static final  int CODE_BODY_SENSORS           = 12;
-    public static final  int CODE_ACCESS_FINE_LOCATION   = 13;
-    public static final  int CODE_ACCESS_COARSE_LOCATION = 14;
-    public static final  int CODE_READ_EXTERNAL_STORAGE  = 15;
-    public static final  int CODE_WRITE_EXTERNAL_STORAGE = 16;
-    public static final  int CODE_RECORD_AUDIO           = 17;
-    public static final  int CODE_READ_SMS               = 18;
-    public static final  int CODE_RECEIVE_WAP_PUSH       = 19;
-    public static final  int CODE_RECEIVE_MMS            = 20;
-    public static final  int CODE_RECEIVE_SMS            = 21;
-    public static final  int CODE_SEND_SMS               = 22;
-    private static final int CODE_ALL_PERMISSION         = 100;
-    private static final int CODE_Mutil_PERMISSION       = 200;
-
-    //危险权限9组,25个权限(需要动态申请),每组只要有一个权限申请成功,默认整组权限都能用
-    //联系人权限
-    public static final String PERMISSION_WRITE_CONTACTS         = Manifest.permission.WRITE_CONTACTS;
-    public static final String PERMISSION_GET_ACCOUNTS           = Manifest.permission.GET_ACCOUNTS;
-    public static final String PERMISSION_READ_CONTACTS          = Manifest.permission.READ_CONTACTS;
-    //电话权限(清单文件没找到PERMISSION_ADD_VOICEMAIL)
-    public static final String PERMISSION_READ_CALL_LOG          = Manifest.permission.READ_CALL_LOG;
-    public static final String PERMISSION_READ_PHONE_STATE       = Manifest.permission.READ_PHONE_STATE;
-    public static final String PERMISSION_CALL_PHONE             = Manifest.permission.CALL_PHONE;
-    public static final String PERMISSION_WRITE_CALL_LOG         = Manifest.permission.WRITE_CALL_LOG;
-    public static final String PERMISSION_USE_SIP                = Manifest.permission.USE_SIP;
-    public static final String PERMISSION_PROCESS_OUTGOING_CALLS = Manifest.permission.PROCESS_OUTGOING_CALLS;
-    //public static final String PERMISSION_ADD_VOICEMAIL          = Manifest.permission.ADD_VOICEMAIL;
-    //日历权限
-    public static final String PERMISSION_READ_CALENDAR          = Manifest.permission.READ_CALENDAR;
-    public static final String PERMISSION_WRITE_CALENDAR         = Manifest.permission.WRITE_CALENDAR;
-    //相机权限
-    public static final String PERMISSION_CAMERA                 = Manifest.permission.CAMERA;
-    //传感器权限
-    public static final String PERMISSION_BODY_SENSORS           = Manifest.permission.BODY_SENSORS;
-    //定位权限
-    public static final String PERMISSION_ACCESS_FINE_LOCATION   = Manifest.permission.ACCESS_FINE_LOCATION;
-    public static final String PERMISSION_ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    //存储权限
-    public static final String PERMISSION_READ_EXTERNAL_STORAGE  = Manifest.permission.READ_EXTERNAL_STORAGE;
-    public static final String PERMISSION_WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-    //麦克风权限
-    public static final String PERMISSION_RECORD_AUDIO           = Manifest.permission.RECORD_AUDIO;
-    //短信权限(没找到READ_CELL_BROADCASTS)
-    public static final String PERMISSION_READ_SMS               = Manifest.permission.READ_SMS;
-    public static final String PERMISSION_RECEIVE_WAP_PUSH       = Manifest.permission.RECEIVE_WAP_PUSH;
-    public static final String PERMISSION_RECEIVE_MMS            = Manifest.permission.RECEIVE_MMS;
-    public static final String PERMISSION_RECEIVE_SMS            = Manifest.permission.RECEIVE_SMS;
-    public static final String PERMISSION_SEND_SMS               = Manifest.permission.SEND_SMS;
-
-    public static final String[] requestPermissions = {
-            PERMISSION_WRITE_CONTACTS,
-            PERMISSION_GET_ACCOUNTS,
-            PERMISSION_READ_CONTACTS,
-            PERMISSION_READ_CALL_LOG,
-            PERMISSION_READ_PHONE_STATE,
-            PERMISSION_CALL_PHONE,
-            PERMISSION_WRITE_CALL_LOG,
-            PERMISSION_USE_SIP,
-            PERMISSION_PROCESS_OUTGOING_CALLS,
-            PERMISSION_READ_CALENDAR,
-            PERMISSION_WRITE_CALENDAR,
-            PERMISSION_CAMERA,
-            PERMISSION_BODY_SENSORS,
-            PERMISSION_ACCESS_FINE_LOCATION,
-            PERMISSION_ACCESS_COARSE_LOCATION,
-            PERMISSION_READ_EXTERNAL_STORAGE,
-            PERMISSION_WRITE_EXTERNAL_STORAGE,
-            PERMISSION_RECORD_AUDIO,
-            PERMISSION_READ_SMS,
-            PERMISSION_RECEIVE_WAP_PUSH,
-            PERMISSION_RECEIVE_MMS,
-            PERMISSION_RECEIVE_SMS,
-            PERMISSION_SEND_SMS
-    };
 
 
     private static String TAG = "PermissionsUtils";
@@ -227,6 +142,51 @@ public class PermissionsUtils {
     }
 
     /**
+     * 申请一组或多组权限
+     * <p>
+     * 只申请权限,不对某个请求的权限返回码作处理
+     *
+     * @param activity
+     * @param PermissionGroup PermissionsContants.XX_GROUP
+     */
+    public static void requestPermissionGroup(final Activity activity, final String[]... PermissionGroup) {
+
+        List<String> list = new ArrayList<>();
+
+        for (int i = 0; i < PermissionGroup.length; i++) {
+            for (int j = 0; j < PermissionGroup[i].length; j++) {
+                list.add(PermissionGroup[i][j]);
+            }
+        }
+        String[] permissions = list.toArray(new String[list.size()]);
+        if (permissions.length == list.size()) {
+            Log.i(TAG, "requestPermissionGroup: "+list.size());
+            requestMultiPermission(activity, permissions, null);
+        }
+    }
+
+    /**
+     * 申请一组或多组权限
+     * <p>
+     * 只申请权限,不对某个请求的权限返回码作处理
+     *
+     * @param activity
+     * @param PermissionGroup PermissionsContants.XX_GROUP
+     */
+    public static void requestPermissionGroup(final Activity activity, OnPermissionListener listener, final String[]... PermissionGroup) {
+
+        List<String> list = new ArrayList<>();
+
+        for (int i = 0; i < PermissionGroup.length; i++) {
+            for (int j = 0; j < PermissionGroup[i].length; j++) {
+                list.add(PermissionGroup[i][j]);
+            }
+        }
+
+        requestMultiPermission(activity, list.toArray(new String[list.size()]), listener);
+    }
+
+    /**
      * 申请多个权限
      * <p>
      * 只申请权限,不对某个请求的权限返回码作处理
@@ -250,9 +210,9 @@ public class PermissionsUtils {
      */
     public static void requestMultiPermission(final Activity activity, final String[] mutilPermissionList, OnPermissionListener listener) {
         mOnPermissionListener = listener;
-        //首次申请或彻底禁止,没有申请到的权限
+        /**首次申请或彻底禁止,没有申请到的权限**/
         final List<String> permissionsList = getMutilPermission(activity, mutilPermissionList, false);
-        //没有彻底禁止,但没有申请到的权限
+        /**没有彻底禁止,但没有申请到的权限**/
         final List<String> shouldRationalePermissionsList = getMutilPermission(activity, mutilPermissionList, true);
         if (permissionsList == null || shouldRationalePermissionsList == null) {
             return;
@@ -486,7 +446,7 @@ public class PermissionsUtils {
         }
 
         if (notGranted.size() == 0) {
-            Toast.makeText(activity, "所有权限申请成功" + notGranted, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "权限申请成功" + notGranted, Toast.LENGTH_SHORT).show();
         } else {
 
             openPermissionsSetting(activity, "部分权限需要手动授权");
@@ -543,81 +503,81 @@ public class PermissionsUtils {
     }
 
     /**特殊权限**/
-//    /**
-//     * 悬浮窗权限
-//     * <p>
-//     * 引导用用户去设置页面设置
-//     * <p>
-//     * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-//     * <p>
-//     * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
-//     * <p>
-//     * 使用"package:" + getPackageName()携带App的包名信息
-//     * <p>
-//     * 使用Settings.canDrawOverlays方法判断授权结果
-//     *
-//     * @param view
-//     */
-//    public void Floating_window(View view) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            // 判断是否有SYSTEM_ALERT_WINDOW权限
-//            if (!Settings.canDrawOverlays(this)) {
-//                // 申请SYSTEM_ALERT_WINDOW权限
-//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-//                intent.setData(Uri.parse("package:" + getPackageName()));
-//                startActivityForResult(intent, REQUEST_Floating_WINDOW);
-//            } else {
-//                //doSomething
-//            }
-//        }
-//    }
-//
-//    /**
-//     * 系统设置
-//     * <p>
-//     * 引导用用户去设置页面设置
-//     * <p>
-//     * <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-//     * <p>
-//     * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
-//     * <p>
-//     * 使用"package:" + getPackageName()携带App的包名信息
-//     * <p>
-//     * 使用Settings.System.canWrite方法检测授权结果
-//     *
-//     * @param view
-//     */
-//    public void System_Setting(View view) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            //判断是否有WRITE_SETTINGS权限
-//            if (!Settings.System.canWrite(this)) {
-//                //申请WRITE_SETTINGS权限
-//                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-//                intent.setData(Uri.parse("package:" + getPackageName()));
-//                startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
-//            } else {
-//                //doSomething
-//            }
-//        }
-//
-//    }
-//
-//    private static final int REQUEST_Floating_WINDOW     = 1;
-//    private static final int REQUEST_CODE_WRITE_SETTINGS = 2;
-//
-//    @RequiresApi(api = Build.VERSION_CODES.M)
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_Floating_WINDOW) {
-//            if (canDrawOverlays(this)) {
-//                Logger.i(TAG, "onActivityResult Floating_WINDOW granted");
-//            }
-//        }
-//        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
-//            if (Settings.System.canWrite(this)) {
-//                Logger.i(TAG, "onActivityResult write settings granted");
-//            }
-//        }
-//    }
+    //    /**
+    //     * 悬浮窗权限
+    //     * <p>
+    //     * 引导用用户去设置页面设置
+    //     * <p>
+    //     * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    //     * <p>
+    //     * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
+    //     * <p>
+    //     * 使用"package:" + getPackageName()携带App的包名信息
+    //     * <p>
+    //     * 使用Settings.canDrawOverlays方法判断授权结果
+    //     *
+    //     * @param view
+    //     */
+    //    public void Floating_window(View view) {
+    //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    //            // 判断是否有SYSTEM_ALERT_WINDOW权限
+    //            if (!Settings.canDrawOverlays(this)) {
+    //                // 申请SYSTEM_ALERT_WINDOW权限
+    //                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+    //                intent.setData(Uri.parse("package:" + getPackageName()));
+    //                startActivityForResult(intent, REQUEST_Floating_WINDOW);
+    //            } else {
+    //                //doSomething
+    //            }
+    //        }
+    //    }
+    //
+    //    /**
+    //     * 系统设置
+    //     * <p>
+    //     * 引导用用户去设置页面设置
+    //     * <p>
+    //     * <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    //     * <p>
+    //     * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
+    //     * <p>
+    //     * 使用"package:" + getPackageName()携带App的包名信息
+    //     * <p>
+    //     * 使用Settings.System.canWrite方法检测授权结果
+    //     *
+    //     * @param view
+    //     */
+    //    public void System_Setting(View view) {
+    //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    //            //判断是否有WRITE_SETTINGS权限
+    //            if (!Settings.System.canWrite(this)) {
+    //                //申请WRITE_SETTINGS权限
+    //                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+    //                intent.setData(Uri.parse("package:" + getPackageName()));
+    //                startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+    //            } else {
+    //                //doSomething
+    //            }
+    //        }
+    //
+    //    }
+    //
+    //    private static final int REQUEST_Floating_WINDOW     = 1;
+    //    private static final int REQUEST_CODE_WRITE_SETTINGS = 2;
+    //
+    //    @RequiresApi(api = Build.VERSION_CODES.M)
+    //    @Override
+    //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //        super.onActivityResult(requestCode, resultCode, data);
+    //        if (requestCode == REQUEST_Floating_WINDOW) {
+    //            if (canDrawOverlays(this)) {
+    //                Logger.i(TAG, "onActivityResult Floating_WINDOW granted");
+    //            }
+    //        }
+    //        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
+    //            if (Settings.System.canWrite(this)) {
+    //                Logger.i(TAG, "onActivityResult write settings granted");
+    //            }
+    //        }
+    //    }
 }
