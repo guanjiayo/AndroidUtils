@@ -9,11 +9,24 @@ import java.util.Stack;
 /*
  * @创建者     默小铭
  * @博客       http://blog.csdn.net/u012792686
- * @创建时间   2016/9/4 20:51
- * @本类描述	  Activity管理工具类
- * @内容说明   主要用于项目Activity的管理(增删)
+ * @创建时间   2017/9/4 20:51
+ * @本类描述	  Activity管理工具类(栈的方式)
+ * @内容说明   主要用于项目Activity的管理,以及Activity的跳转操作
+ *            1.Activity之间跳转(含数据)
+ *            2.Activity的转场动画
+ *            3.获取当前运行的Activity
+ *            4.判断Activity是否存在
+ *            5.退出程序
+ *
+ * //TODO 把转场动画也封装进去
+ * //1. ActivityOptions  5.0以后
+ * http://blog.csdn.net/qibin0506/article/details/48129139
+ * http://blog.csdn.net/u012702547/article/details/51289789
+ *
+ * 注意不要用onEnterAnimationComplete(),有未知Bug
  *
  *
+ * //2. overridePendingTransition(R.anim.in,R.anim.out);
  *
  */
 
@@ -29,26 +42,29 @@ import java.util.Stack;
  * super.onCreate(savedInstanceState);
  * <p>
  * // 添加Activity到堆栈
- * ActManager.getAppManager().addActivity(this);
+ * ActStackManager.getAppManager().addActivity(this);
  * <p>
  * }
  * @Override protected void onDestroy(){
  * super.onDestroy();
  * // 结束Activity&从堆栈中移除
- * ActManager.getAppManager().finishActivity(this);
+ * ActStackManager.getAppManager().finishActivity(this);
  * }
+ * <p>
+ * <p>
+ * 其他Activity类,直接使用跳转或其他方法即可
  */
 
-public class ActManager {
+public class ActStackManager {
     private static Stack<Activity> activityStack;
-    private static ActManager      instance;
+    private static ActStackManager instance;
 
     /**
      * 单一实例:创建的类不会多次new,不占用资源
      */
-    public static ActManager getInstance() {
+    public static ActStackManager getInstance() {
         if (instance == null) {
-            instance = new ActManager();
+            instance = new ActStackManager();
         }
         return instance;
     }
