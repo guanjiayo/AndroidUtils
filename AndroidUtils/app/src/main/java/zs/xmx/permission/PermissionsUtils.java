@@ -23,16 +23,20 @@ package zs.xmx.permission;
  * @补充内容
  *
  *       注意:
-        1.部分手机修改过安卓系统Rom,如小米4,如小米4,shouldShowRequestPermissionRationale会一直返回false
-        2.targetSDKVersion>=23才有动态权限机制
-        3.6.0以前的版本,shouldShowRequestPermissionRationale会一直返回false
-        4.兼容性,使用V4包下的ActivityCompat(CotextCompat是它的父类)
-        5.6.0以前的版本,ActivityCompat.checkSelfPermission()会始终等于PERMISSION_GRANTED
-        6.6.0以前的版本,如果用户关闭了你申请的权限，ActivityCompat.checkSelfPermission(),会导致程序崩溃,加判断低于23就不申请权限
-
- * ---------------------------------     
- * @更新时间   
- * @新增内容
+ *       1.部分手机修改过安卓系统Rom,如小米4,如小米4,shouldShowRequestPermissionRationale会一直返回false
+ *       2.targetSDKVersion>=23才有动态权限机制
+ *       3.6.0以前的版本,shouldShowRequestPermissionRationale会一直返回false
+ *       4.兼容性,使用V4包下的ActivityCompat(CotextCompat是它的父类)
+ *       5.6.0以前的版本,ActivityCompat.checkSelfPermission()会始终等于PERMISSION_GRANTED
+ *       6.6.0以前的版本,如果用户关闭了你申请的权限，ActivityCompat.checkSelfPermission(),会导致程序崩溃,加判断低于23就不申请权限
+ *       7.如果在清单文件中声明了CAMERA权限,我们使用Intent的方式启动系统相机,会产生SecurityException,针对这些现象,我们需要先判断该权限是否已经授权
+ *       8.Android 6.0 增加了对附近设备的权限限制,如下三个API在调用前都需要ACCESS_FINE_LOCATION 或者 ACCESS_COARSE_LOCATION权限
+ *          1. WifiManager.getScanResults()
+ *          2. BluetoothDevice.ACTION_FOUND
+ *          3. BluetoothLeScanner.startScan()
+ *
+ *    TODO 在调用申请蓝牙,wifi上述第8点时,写一个检测是否调用 ACCESS_FINE_LOCATION 或者 ACCESS_COARSE_LOCATION权限,否,让用户手动设置
+ *
  *
  *
  *
@@ -40,8 +44,10 @@ package zs.xmx.permission;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
@@ -509,60 +515,109 @@ public class PermissionsUtils {
             }
         });
     }
-    /**特殊权限**/
-    //清单文件先声明权限,在Activty中实现下面代码:
-    //
-    //    /**
-    //     * 悬浮窗权限
-    //     * <p>
-    //     * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
-    //     * <p>
-    //     * 使用"package:" + getPackageName()携带App的包名信息
-    //     * <p>
-    //     * 使用Settings.canDrawOverlays方法判断授权结果
-    //     *
-    //     * @param view
-    //     */
-    //    public void Floating_window(View view) {
-    //        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-    //        intent.setData(Uri.parse("package:" + getPackageName()));
-    //        startActivityForResult(intent, REQUEST_Floating_WINDOW);
-    //    }
-    //
-    //    /**
-    //     * 系统设置
-    //     * <p>
-    //     * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
-    //     * <p>
-    //     * 使用"package:" + getPackageName()携带App的包名信息
-    //     * <p>
-    //     * 使用Settings.System.canWrite方法检测授权结果
-    //     *
-    //     * @param view
-    //     */
-    //    public void System_Setting(View view) {
-    //        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-    //        intent.setData(Uri.parse("package:" + getPackageName()));
-    //        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
-    //    }
-    //
-    //    private static final int REQUEST_Floating_WINDOW     = 1;
-    //    private static final int REQUEST_CODE_WRITE_SETTINGS = 2;
-    //
-    //    @RequiresApi(api = Build.VERSION_CODES.M)
-    //    @Override
-    //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //        super.onActivityResult(requestCode, resultCode, data);
-    //        if (requestCode == REQUEST_Floating_WINDOW) {
-    //            if (Settings.canDrawOverlays(this)) {
-    //                Logger.i(TAG, "onActivityResult granted");
-    //            }
-    //        }
-    //        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
-    //            if (Settings.System.canWrite(this)) {
-    //                Logger.i(TAG, "onActivityResult write settings granted");
-    //            }
-    //        }
-    //    }
 
+    /**
+     * 判断清单文件是否生命了某项权限的方法
+     *
+     * @param context
+     * @param permissionName
+     * @return
+     */
+    public boolean hasPermissionInManifest(Context context, String permissionName) {
+        final String packageName = context.getPackageName();
+        try {
+            final PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+            final String[] declaredPermisisons = packageInfo.requestedPermissions;
+            if (declaredPermisisons != null && declaredPermisisons.length > 0) {
+                for (String p : declaredPermisisons) {
+                    if (p.equals(permissionName)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
+        return false;
+    }
+
+    /**特殊权限**/
+//    /**
+//     * 悬浮窗权限
+//     * <p>
+//     * 引导用用户去设置页面设置
+//     * <p>
+//     * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+//     * <p>
+//     * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
+//     * <p>
+//     * 使用"package:" + getPackageName()携带App的包名信息
+//     * <p>
+//     * 使用Settings.canDrawOverlays方法判断授权结果
+//     *
+//     * @param view
+//     */
+//    public void Floating_window(View view) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            // 判断是否有SYSTEM_ALERT_WINDOW权限
+//            if (!Settings.canDrawOverlays(this)) {
+//                // 申请SYSTEM_ALERT_WINDOW权限
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+//                intent.setData(Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent, REQUEST_Floating_WINDOW);
+//            } else {
+//                //doSomething
+//            }
+//        }
+//    }
+//
+//    /**
+//     * 系统设置
+//     * <p>
+//     * 引导用用户去设置页面设置
+//     * <p>
+//     * <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+//     * <p>
+//     * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
+//     * <p>
+//     * 使用"package:" + getPackageName()携带App的包名信息
+//     * <p>
+//     * 使用Settings.System.canWrite方法检测授权结果
+//     *
+//     * @param view
+//     */
+//    public void System_Setting(View view) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            //判断是否有WRITE_SETTINGS权限
+//            if (!Settings.System.canWrite(this)) {
+//                //申请WRITE_SETTINGS权限
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+//                intent.setData(Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+//            } else {
+//                //doSomething
+//            }
+//        }
+//
+//    }
+//
+//    private static final int REQUEST_Floating_WINDOW     = 1;
+//    private static final int REQUEST_CODE_WRITE_SETTINGS = 2;
+//
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_Floating_WINDOW) {
+//            if (canDrawOverlays(this)) {
+//                Logger.i(TAG, "onActivityResult Floating_WINDOW granted");
+//            }
+//        }
+//        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
+//            if (Settings.System.canWrite(this)) {
+//                Logger.i(TAG, "onActivityResult write settings granted");
+//            }
+//        }
+//    }
 }

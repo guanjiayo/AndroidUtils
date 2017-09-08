@@ -45,10 +45,10 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
  *            14.Properties
  *            15.AlarmManager
  *            16.PendingIntent
- *            17.Permission 6.0手动申请权限
- *            18.WifiManager  wifi管理器
- *            19.NetworkInfo
- *            20.ConnectivityManager
+ *            17.WifiManager  wifi管理器
+ *            18.NetworkInfo
+ *            19.ConnectivityManager
+ *            20.百度地图权限问题
  *
  *      @{TODO} 把现有的工具类细分功能,拆分一下包
  */
@@ -157,5 +157,17 @@ public class Others {
         return 0;
     }
 
+    /**
+     * -----------------------百度地图权限问题---------------------------
+     */
+
+//    //部分早期Android6.0版存在位置开关关闭后无法定位的问题，目前测试最新的Android6.0版本原生系统，已不存在此问题。
+    //    //针对6.0系统的位置开关问题。由于GPS设置的行为在各版本中一致，因此可以简单的使用系统API来判断用户是否打开了位置按钮，让检测到系统版本为6.0，并且用户未打开按钮时，进行提示。
+    //    LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+    //
+    //if(!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+    //
+    //        // 未打开位置开关，可能导致定位失败或定位不准，提示用户或做相应处理
+    //    }
 
 }

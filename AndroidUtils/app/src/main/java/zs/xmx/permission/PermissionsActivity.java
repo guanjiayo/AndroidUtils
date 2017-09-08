@@ -17,6 +17,8 @@ import android.widget.Toast;
 import zs.xmx.R;
 import zs.xmx.utils.Logger;
 
+import static android.provider.Settings.canDrawOverlays;
+
 
 public class PermissionsActivity extends AppCompatActivity {
 
@@ -81,6 +83,10 @@ public class PermissionsActivity extends AppCompatActivity {
     /**
      * 悬浮窗权限
      * <p>
+     * 引导用用户去设置页面设置
+     * <p>
+     * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+     * <p>
      * 使用Action Settings.ACTION_MANAGE_OVERLAY_PERMISSION启动隐式Intent
      * <p>
      * 使用"package:" + getPackageName()携带App的包名信息
@@ -90,13 +96,25 @@ public class PermissionsActivity extends AppCompatActivity {
      * @param view
      */
     public void Floating_window(View view) {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, REQUEST_Floating_WINDOW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // 判断是否有SYSTEM_ALERT_WINDOW权限
+            if (!Settings.canDrawOverlays(this)) {
+                // 申请SYSTEM_ALERT_WINDOW权限
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, REQUEST_Floating_WINDOW);
+            } else {
+                //doSomething
+            }
+        }
     }
 
     /**
      * 系统设置
+     * <p>
+     * 引导用用户去设置页面设置
+     * <p>
+     * <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
      * <p>
      * 使用Action Settings.ACTION_MANAGE_WRITE_SETTINGS 启动隐式Intent
      * <p>
@@ -107,9 +125,18 @@ public class PermissionsActivity extends AppCompatActivity {
      * @param view
      */
     public void System_Setting(View view) {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //判断是否有WRITE_SETTINGS权限
+            if (!Settings.System.canWrite(this)) {
+                //申请WRITE_SETTINGS权限
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS);
+            } else {
+                //doSomething
+            }
+        }
+
     }
 
     private static final int REQUEST_Floating_WINDOW     = 1;
@@ -120,8 +147,8 @@ public class PermissionsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_Floating_WINDOW) {
-            if (Settings.canDrawOverlays(this)) {
-                Logger.i(TAG, "onActivityResult granted");
+            if (canDrawOverlays(this)) {
+                Logger.i(TAG, "onActivityResult Floating_WINDOW granted");
             }
         }
         if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
