@@ -2,7 +2,7 @@ package zs.xmx.constant;
 /*
  * @创建者     默小铭
  * @博客       http://blog.csdn.net/u012792686
- * @创建时间   2017/9/8
+ * @创建时间   2017/9/10
  * @本类描述	  权限管理工具类_常量类
  * @使用   import static zs.xmx.constant.PermissionsContants.*; 直接使用
  *

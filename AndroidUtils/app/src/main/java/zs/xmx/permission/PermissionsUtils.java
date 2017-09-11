@@ -2,7 +2,7 @@ package zs.xmx.permission;
 /*
  * @创建者     mqm
  * @博客       http://blog.csdn.net/u012792686
- * @创建时间   2017/9/04
+ * @创建时间   2017/9/10
  * @本类描述	  Android 6.0 动态申请权限工具类
  * @内容说明     1.申请对应权限
  *              2.申请所有权限
@@ -36,7 +36,7 @@ package zs.xmx.permission;
  *          3. BluetoothLeScanner.startScan()
  *
  *    TODO 在调用申请蓝牙,wifi上述第8点时,写一个检测是否调用 ACCESS_FINE_LOCATION 或者 ACCESS_COARSE_LOCATION权限,否,让用户手动设置
- *    todo requestMutil 申请权限在genymotion 6.0 会申请3次
+ *    todo requestMutil 申请权限在genymotion 6.0 会申请3次,后续有问题再处理
  *
  *
  *
@@ -477,7 +477,7 @@ public class PermissionsUtils {
     }
 
     /**
-     * 判断清单文件是否生命了某项权限的方法
+     * 判断清单文件是否声明了某项权限的方法
      *
      * @param context
      * @param permissionName
