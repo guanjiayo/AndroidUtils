@@ -37,6 +37,7 @@ package zs.xmx.permission;
  *
  *    TODO 在调用申请蓝牙,wifi上述第8点时,写一个检测是否调用 ACCESS_FINE_LOCATION 或者 ACCESS_COARSE_LOCATION权限,否,让用户手动设置
  *    todo requestMutil 申请权限在genymotion 6.0 会申请3次,后续有问题再处理
+ *    todo 检测清单文件中申请过的用户权限有哪些
  *
  *
  *
@@ -483,7 +484,7 @@ public class PermissionsUtils {
      * @param permissionName
      * @return
      */
-    public boolean hasPermissionInManifest(Context context, String permissionName) {
+    public static boolean hasPermissionInManifest(Context context, String permissionName) {
         final String packageName = context.getPackageName();
         try {
             final PackageInfo packageInfo = context.getPackageManager()
