@@ -2,6 +2,7 @@ package zs.xmx.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.util.SimpleArrayMap;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -19,23 +20,45 @@ import java.util.Map;
  *            2.apply是API>9出现的,用SharedPreferencesCompat适配
  *      ---------------------------------------------
  *
- *             使用前,要在基类先实例化 new SPUtils(this,"share_data");
+ *             使用前,要在基类先实例化(上下文用全局)
+ *             SPUtils.getInstant(Context context, String spName);
+ *             调用:
+ *             SPUtils.PutXX()
+ *
  */
 public class SPUtils {
 
     private static SharedPreferences        sp;
     private static SharedPreferences.Editor editor; //编辑器
+    private static SimpleArrayMap<String, SPUtils> SP_UTILS_MAP = new SimpleArrayMap<>();
 
-    public SPUtils(Context context, String spName) {
+    private SPUtils(Context context, String spName) {
         sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
         editor = sp.edit();
-        SharedPreferencesCompat.apply(editor);
 
+    }
+
+    /*
+     * 获取SP实例
+     *
+     * @param spName sp名
+     * @return {@link SPUtils
+     */
+    public static SPUtils getInstance(Context context, String spName) {
+        if (isSpace(spName))
+            //默认SP库名称
+            spName = "share_data";
+        SPUtils spUtils = SP_UTILS_MAP.get(spName);
+        if (spUtils == null) {
+            spUtils = new SPUtils(context, spName);
+            SP_UTILS_MAP.put(spName, spUtils);
+        }
+        return spUtils;
     }
 
     /**
      * 获取 SharedPreferences 路径
-     *一般是 /data/data/com.xxx.xxx/shared_prefs
+     * 一般是 /data/data/com.xxx.xxx/shared_prefs
      *
      * @param context
      * @return SharedPreferences 路径
@@ -65,6 +88,8 @@ public class SPUtils {
         } else {
             editor.putString(key, object.toString());
         }
+
+        SharedPreferencesCompat.apply(editor);
     }
 
     /**
@@ -85,9 +110,10 @@ public class SPUtils {
             return sp.getFloat(key, (Float) defaultObject);
         } else if (defaultObject instanceof Long) {
             return sp.getLong(key, (Long) defaultObject);
+        } else {
+            return sp.getString(key, null);
         }
 
-        return null;
     }
 
     /**
@@ -172,6 +198,23 @@ public class SPUtils {
             }
             editor.commit();
         }
+    }
+
+    /**
+     * 判断输入的文件名不能为空
+     *
+     * @param str
+     * @return
+     */
+    private static boolean isSpace(final String str) {
+        if (str == null)
+            return true;
+        for (int i = 0, len = str.length(); i < len; ++i) {
+            if (!Character.isWhitespace(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

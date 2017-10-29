@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 
 android {
 
-    //渠道名称
+    //渠道名称 TODO 3.0以后改版了
 //    productFlavors {
 //        develop {}
 //        xiaomi {}
