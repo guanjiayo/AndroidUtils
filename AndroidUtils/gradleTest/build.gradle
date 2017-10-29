@@ -4,20 +4,20 @@ apply plugin: 'com.android.application'
 android {
 
     //渠道名称
-    productFlavors {
-        develop {}
-        xiaomi {}
-        huawei {}
-        anzhi {}
-    }
+//    productFlavors {
+//        develop {}
+//        xiaomi {}
+//        huawei {}
+//        anzhi {}
+//    }
     //修改生成的apk名称
     android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
+        variant.outputs.all { output ->
+
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                //这里修改apk文件名 def fileName="自定义名称"
-                def fileName = outputFile.name.replace("app", "${variant.productFlavors[0].name}_${defaultConfig.applicationId}_${defaultConfig.versionName}")
-                output.outputFile = new File(outputFile.parent, fileName)
+                def fileName = outputFile.name.replace(".apk", "-${defaultConfig.versionName}.apk")
+                outputFileName = fileName
             }
         }
     }
