@@ -23,7 +23,7 @@ android {
     }
     //新建 config.gradle 文件方式:
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
     defaultConfig {
         //配置 moudle 的 build.gradle 方式,直接定义变量名声明
         final Version_Code = '1'
@@ -48,16 +48,16 @@ android {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile rootProject.ext.dependencies["support-v7"]
-    testCompile 'junit:junit:4.12'
+    implementation rootProject.ext.dependencies["support-v7"]
+    testImplementation 'junit:junit:4.12'
     //配置 app 的 build.gradle 方式
-    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
 }
 
 

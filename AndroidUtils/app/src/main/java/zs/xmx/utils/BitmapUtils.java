@@ -79,7 +79,7 @@ import java.io.OutputStream;
             3.renderScript模糊图片  API>17
  * ---------------------------------------------     
  * @更新时间   2016/10/10 
- * @更新说明
+ * @更新说明  //TODO 补充压缩图片保存到本地
  */
 public class BitmapUtils {
 
@@ -1569,421 +1569,421 @@ public class BitmapUtils {
     }
 
 
-//    /**
-//     * 横向拼接图片（两张）
-//     *
-//     * @param firstSrcImagePath  第一张图片的路径
-//     * @param secondSrcImagePath 第二张图片的路径
-//     * @param imageFormat        拼接生成图片的格式
-//     * @param toPath             拼接生成图片的路径
-//     *                           要拼接的俩张图片尺寸要一致
-//     */
-//    public static void joinImagesHorizontal(String firstSrcImagePath, String secondSrcImagePath, String imageFormat,
-//                                            String toPath) {
-//        try {
-//            //读取第一张图片
-//            File fileOne = new File(firstSrcImagePath);
-//            BufferedImage imageOne = ImageIO.read(fileOne);
-//            int width = imageOne.getWidth();//图片宽度
-//            int height = imageOne.getHeight();//图片高度
-//            //从图片中读取RGB
-//            int[] imageArrayOne = new int[width * height];
-//            imageArrayOne = imageOne.getRGB(0, 0, width, height, imageArrayOne, 0, width);
-//
-//            //对第二张图片做相同的处理
-//            File fileTwo = new File(secondSrcImagePath);
-//            BufferedImage imageTwo = ImageIO.read(fileTwo);
-//            int width2 = imageTwo.getWidth();
-//            int height2 = imageTwo.getHeight();
-//            int[] ImageArrayTwo = new int[width2 * height2];
-//            ImageArrayTwo = imageTwo.getRGB(0, 0, width, height, ImageArrayTwo, 0, width);
-//            //ImageArrayTwo  =  imageTwo.getRGB(0,0,width2,height2,ImageArrayTwo,0,width2);
-//
-//            //生成新图片
-//            //int height3 = (height>height2 || height==height2)?height:height2;
-//            BufferedImage imageNew = new BufferedImage(width * 2, height, BufferedImage.TYPE_INT_RGB);
-//            //BufferedImage  imageNew  =  new  BufferedImage(width+width2,height3,BufferedImage.TYPE_INT_RGB);
-//            imageNew.setRGB(0, 0, width, height, imageArrayOne, 0, width);//设置左半部分的RGB
-//            imageNew.setRGB(width, 0, width, height, ImageArrayTwo, 0, width);//设置右半部分的RGB
-//            //imageNew.setRGB(width,0,width2,height2,ImageArrayTwo,0,width2);//设置右半部分的RGB
-//
-//            File outFile = new File(toPath);
-//            ImageIO.write(imageNew, imageFormat, outFile);//写图片
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    //    /**
+    //     * 横向拼接图片（两张）
+    //     *
+    //     * @param firstSrcImagePath  第一张图片的路径
+    //     * @param secondSrcImagePath 第二张图片的路径
+    //     * @param imageFormat        拼接生成图片的格式
+    //     * @param toPath             拼接生成图片的路径
+    //     *                           要拼接的俩张图片尺寸要一致
+    //     */
+    //    public static void joinImagesHorizontal(String firstSrcImagePath, String secondSrcImagePath, String imageFormat,
+    //                                            String toPath) {
+    //        try {
+    //            //读取第一张图片
+    //            File fileOne = new File(firstSrcImagePath);
+    //            BufferedImage imageOne = ImageIO.read(fileOne);
+    //            int width = imageOne.getWidth();//图片宽度
+    //            int height = imageOne.getHeight();//图片高度
+    //            //从图片中读取RGB
+    //            int[] imageArrayOne = new int[width * height];
+    //            imageArrayOne = imageOne.getRGB(0, 0, width, height, imageArrayOne, 0, width);
+    //
+    //            //对第二张图片做相同的处理
+    //            File fileTwo = new File(secondSrcImagePath);
+    //            BufferedImage imageTwo = ImageIO.read(fileTwo);
+    //            int width2 = imageTwo.getWidth();
+    //            int height2 = imageTwo.getHeight();
+    //            int[] ImageArrayTwo = new int[width2 * height2];
+    //            ImageArrayTwo = imageTwo.getRGB(0, 0, width, height, ImageArrayTwo, 0, width);
+    //            //ImageArrayTwo  =  imageTwo.getRGB(0,0,width2,height2,ImageArrayTwo,0,width2);
+    //
+    //            //生成新图片
+    //            //int height3 = (height>height2 || height==height2)?height:height2;
+    //            BufferedImage imageNew = new BufferedImage(width * 2, height, BufferedImage.TYPE_INT_RGB);
+    //            //BufferedImage  imageNew  =  new  BufferedImage(width+width2,height3,BufferedImage.TYPE_INT_RGB);
+    //            imageNew.setRGB(0, 0, width, height, imageArrayOne, 0, width);//设置左半部分的RGB
+    //            imageNew.setRGB(width, 0, width, height, ImageArrayTwo, 0, width);//设置右半部分的RGB
+    //            //imageNew.setRGB(width,0,width2,height2,ImageArrayTwo,0,width2);//设置右半部分的RGB
+    //
+    //            File outFile = new File(toPath);
+    //            ImageIO.write(imageNew, imageFormat, outFile);//写图片
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
 
-//    /**
-//     * 横向拼接一组（多张）图像
-//     *
-//     * @param pics    将要拼接的图像
-//     * @param type    图像写入格式
-//     * @param dst_pic 图像写入路径
-//     * @return
-//     */
-//    public static boolean joinImageListHorizontal(String[] pics, String type, String dst_pic) {
-//        try {
-//            int len = pics.length;
-//            if (len < 1) {
-//                System.out.println("pics len < 1");
-//                return false;
-//            }
-//            File[] src = new File[len];
-//            BufferedImage[] images = new BufferedImage[len];
-//            int[][] imageArrays = new int[len][];
-//            for (int i = 0; i < len; i++) {
-//                src[i] = new File(pics[i]);
-//                images[i] = ImageIO.read(src[i]);
-//                int width = images[i].getWidth();
-//                int height = images[i].getHeight();
-//                imageArrays[i] = new int[width * height];// 从图片中读取RGB
-//                imageArrays[i] = images[i].getRGB(0, 0, width, height, imageArrays[i], 0, width);
-//            }
-//
-//            int dst_width = 0;
-//            int dst_height = images[0].getHeight();
-//            for (int i = 0; i < images.length; i++) {
-//                dst_height = dst_height > images[i].getHeight() ? dst_height : images[i].getHeight();
-//                dst_width += images[i].getWidth();
-//            }
-//            //System.out.println(dst_width);
-//            //System.out.println(dst_height);
-//            if (dst_height < 1) {
-//                System.out.println("dst_height < 1");
-//                return false;
-//            }
-//            /*
-//             * 生成新图片
-//             */
-//            BufferedImage ImageNew = new BufferedImage(dst_width, dst_height, BufferedImage.TYPE_INT_RGB);
-//            int width_i = 0;
-//            for (int i = 0; i < images.length; i++) {
-//                ImageNew.setRGB(width_i, 0, images[i].getWidth(), dst_height, imageArrays[i], 0, images[i].getWidth());
-//                width_i += images[i].getWidth();
-//            }
-//            File outFile = new File(dst_pic);
-//            ImageIO.write(ImageNew, type, outFile);// 写图片
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    /**
-//     * 纵向拼接图片（两张）
-//     *
-//     * @param firstSrcImagePath  读取的第一张图片
-//     * @param secondSrcImagePath 读取的第二张图片
-//     * @param imageFormat        图片写入格式
-//     * @param toPath             图片写入路径
-//     */
-//    public static void joinImagesVertical(String firstSrcImagePath, String secondSrcImagePath, String imageFormat,
-//                                          String toPath) {
-//        try {
-//            //读取第一张图片
-//            File fileOne = new File(firstSrcImagePath);
-//            BufferedImage imageOne = ImageIO.read(fileOne);
-//            int width = imageOne.getWidth();//图片宽度
-//            int height = imageOne.getHeight();//图片高度
-//            //从图片中读取RGB
-//            int[] imageArrayOne = new int[width * height];
-//            imageArrayOne = imageOne.getRGB(0, 0, width, height, imageArrayOne, 0, width);
-//
-//            //对第二张图片做相同的处理
-//            File fileTwo = new File(secondSrcImagePath);
-//            BufferedImage imageTwo = ImageIO.read(fileTwo);
-//            int width2 = imageTwo.getWidth();
-//            int height2 = imageTwo.getHeight();
-//            int[] ImageArrayTwo = new int[width2 * height2];
-//            ImageArrayTwo = imageTwo.getRGB(0, 0, width, height, ImageArrayTwo, 0, width);
-//            //ImageArrayTwo  =  imageTwo.getRGB(0,0,width2,height2,ImageArrayTwo,0,width2);
-//
-//            //生成新图片
-//            //int width3 = (width>width2 || width==width2)?width:width2;
-//            BufferedImage imageNew = new BufferedImage(width, height * 2, BufferedImage.TYPE_INT_RGB);
-//            //BufferedImage  imageNew  =  new  BufferedImage(width3,height+height2,BufferedImage.TYPE_INT_RGB);
-//            imageNew.setRGB(0, 0, width, height, imageArrayOne, 0, width);//设置上半部分的RGB
-//            imageNew.setRGB(0, height, width, height, ImageArrayTwo, 0, width);//设置下半部分的RGB
-//            //imageNew.setRGB(0,height,width2,height2,ImageArrayTwo,0,width2);//设置下半部分的RGB
-//
-//            File outFile = new File(toPath);
-//            ImageIO.write(imageNew, imageFormat, outFile);//写图片
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    /**
-//     * 纵向拼接一组（多张）图像
-//     *
-//     * @param pics    将要拼接的图像数组
-//     * @param type    写入图像类型
-//     * @param dst_pic 写入图像路径
-//     * @return
-//     */
-//    public static boolean joinImageListVertical(String[] pics, String type, String dst_pic) {
-//        try {
-//            int len = pics.length;
-//            if (len < 1) {
-//                System.out.println("pics len < 1");
-//                return false;
-//            }
-//            File[] src = new File[len];
-//            BufferedImage[] images = new BufferedImage[len];
-//            int[][] imageArrays = new int[len][];
-//            for (int i = 0; i < len; i++) {
-//                //System.out.println(i);
-//                src[i] = new File(pics[i]);
-//                images[i] = ImageIO.read(src[i]);
-//                int width = images[i].getWidth();
-//                int height = images[i].getHeight();
-//                imageArrays[i] = new int[width * height];// 从图片中读取RGB
-//                imageArrays[i] = images[i].getRGB(0, 0, width, height, imageArrays[i], 0, width);
-//            }
-//
-//            int dst_height = 0;
-//            int dst_width = images[0].getWidth();
-//            for (int i = 0; i < images.length; i++) {
-//                dst_width = dst_width > images[i].getWidth() ? dst_width : images[i].getWidth();
-//                dst_height += images[i].getHeight();
-//            }
-//            //System.out.println(dst_width);
-//            //System.out.println(dst_height);
-//            if (dst_height < 1) {
-//                System.out.println("dst_height < 1");
-//                return false;
-//            }
-//            /*
-//             * 生成新图片
-//             */
-//            BufferedImage ImageNew = new BufferedImage(dst_width, dst_height, BufferedImage.TYPE_INT_RGB);
-//            int height_i = 0;
-//            for (int i = 0; i < images.length; i++) {
-//                ImageNew.setRGB(0, height_i, dst_width, images[i].getHeight(), imageArrays[i], 0, dst_width);
-//                height_i += images[i].getHeight();
-//            }
-//            File outFile = new File(dst_pic);
-//            ImageIO.write(ImageNew, type, outFile);// 写图片
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    /**
-//     * 合并图片(按指定初始x、y坐标将附加图片贴到底图之上)
-//     *
-//     * @param negativeImagePath 背景图片路径
-//     * @param additionImagePath 附加图片路径
-//     * @param x                 附加图片的起始点x坐标
-//     * @param y                 附加图片的起始点y坐标
-//     * @param toPath            图片写入路径
-//     * @throws IOException
-//     */
-//    public static void mergeBothImage(String negativeImagePath, String additionImagePath, String iamgeFromat, int x,
-//                                      int y, String toPath) throws IOException {
-//        InputStream is = null;
-//        InputStream is2 = null;
-//        OutputStream os = null;
-//        try {
-//            is = new FileInputStream(negativeImagePath);
-//            is2 = new FileInputStream(additionImagePath);
-//            BufferedImage image = ImageIO.read(is);
-//            BufferedImage image2 = ImageIO.read(is2);
-//            Graphics g = image.getGraphics();
-//            g.drawImage(image2, x, y, null);
-//            os = new FileOutputStream(toPath);
-//            ImageIO.write(image, iamgeFromat, os);//写图片
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (os != null) {
-//                os.close();
-//            }
-//            if (is2 != null) {
-//                is2.close();
-//            }
-//            if (is != null) {
-//                is.close();
-//            }
-//        }
-//    }
-//
-//    /**
-//     * 将一组图片一次性附加合并到底图上
-//     *
-//     * @param negativeImagePath 源图像（底图）路径
-//     * @param additionImageList 附加图像信息列表
-//     * @param imageFormat       图像写入格式
-//     * @param toPath            图像写入路径
-//     * @throws IOException
-//     */
-//    public static void mergeImageList(String negativeImagePath, List additionImageList, String imageFormat, String
-//            toPath) throws IOException {
-//        InputStream is = null;
-//        InputStream is2 = null;
-//        OutputStream os = null;
-//        try {
-//            is = new FileInputStream(negativeImagePath);
-//            BufferedImage image = ImageIO.read(is);
-//            //Graphics g=image.getGraphics();
-//            Graphics2D g = image.createGraphics();
-//            BufferedImage image2 = null;
-//            if (additionImageList != null) {
-//                for (int i = 0; i < additionImageList.size(); i++) {
-//                    //解析附加图片信息：x坐标、 y坐标、 additionImagePath附加图片路径
-//                    //图片信息存储在一个数组中
-//                    String[] additionImageInfo = (String[]) additionImageList.get(i);
-//                    int x = Integer.parseInt(additionImageInfo[0]);
-//                    int y = Integer.parseInt(additionImageInfo[1]);
-//                    String additionImagePath = additionImageInfo[2];
-//                    //读取文件输入流，并合并图片
-//                    is2 = new FileInputStream(additionImagePath);
-//                    //System.out.println(x+"  :  "+y+"  :  "+additionImagePath);
-//                    image2 = ImageIO.read(is2);
-//                    g.drawImage(image2, x, y, null);
-//                }
-//            }
-//            os = new FileOutputStream(toPath);
-//            ImageIO.write(image, imageFormat, os);//写图片
-//            //JPEGImageEncoder enc=JPEGCodec.createJPEGEncoder(os);
-//            //enc.encode(image);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (os != null) {
-//                os.close();
-//            }
-//            if (is2 != null) {
-//                is2.close();
-//            }
-//            if (is != null) {
-//                is.close();
-//            }
-//        }
-//    }
-//
-//
-//    /**
-//     * 图片文件转成二进制
-//     *
-//     * @param file
-//     * @return
-//     */
-//    public static String[][] toBinary(File file) {
-//        int[] rgb = new int[3];
-//
-//        BufferedImage bi = null;
-//        try {
-//            bi = ImageIO.read(file);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        int width = bi.getWidth();
-//        int height = bi.getHeight();
-//        int minx = bi.getMinX();
-//        int miny = bi.getMinY();
-//        String[][] list = new String[width][height];
-//        for (int i = minx; i < width; i++) {
-//            for (int j = miny; j < height; j++) {
-//                int pixel = bi.getRGB(i, j);
-//                rgb[0] = (pixel & 0xff0000) >> 16;
-//                rgb[1] = (pixel & 0xff00) >> 8;
-//                rgb[2] = (pixel & 0xff);
-//                list[i][j] = rgb[0] + "," + rgb[1] + "," + rgb[2];
-//
-//            }
-//        }
-//        return list;
-//
-//    }
-//
-//    /**
-//     * 比较俩个图片的相似度
-//     *
-//     * @param image1
-//     * @param image2
-//     * @return 图片相似度
-//     */
-//    public static float compareImage(File image1, File image2) {
-//        String[][] list1 = toBinary(image1);
-//        String[][] list2 = toBinary(image2);
-//        int xiangsi = 0;
-//        int busi = 0;
-//        int i = 0, j = 0;
-//        for (String[] strings : list1) {
-//            if ((i + 1) == list1.length) {
-//                continue;
-//            }
-//            for (int m = 0; m < strings.length; m++) {
-//                try {
-//                    String[] value1 = list1[i][j].toString().split(",");
-//                    String[] value2 = list2[i][j].toString().split(",");
-//                    int k = 0;
-//                    for (int n = 0; n < value2.length; n++) {
-//                        if (Math.abs(Integer.parseInt(value1[k]) - Integer.parseInt(value2[k])) < 5) {
-//                            xiangsi++;
-//                        } else {
-//                            busi++;
-//                        }
-//                    }
-//                } catch (RuntimeException e) {
-//                    continue;
-//                }
-//                j++;
-//            }
-//            i++;
-//        }
-//
-//        list1 = toBinary(image1);
-//        list2 = toBinary(image2);
-//        i = 0;
-//        j = 0;
-//        for (String[] strings : list1) {
-//            if ((i + 1) == list1.length) {
-//                continue;
-//            }
-//            for (int m = 0; m < strings.length; m++) {
-//                try {
-//                    String[] value1 = list1[i][j].toString().split(",");
-//                    String[] value2 = list2[i][j].toString().split(",");
-//                    int k = 0;
-//                    for (int n = 0; n < value2.length; n++) {
-//                        if (Math.abs(Integer.parseInt(value1[k]) - Integer.parseInt(value2[k])) < 5) {
-//                            xiangsi++;
-//                        } else {
-//                            busi++;
-//                        }
-//                    }
-//                } catch (RuntimeException e) {
-//                    continue;
-//                }
-//                j++;
-//            }
-//            i++;
-//        }
-//        String baifen = "";
-//        try {
-//            baifen = ((Double.parseDouble(xiangsi + "") / Double.parseDouble((busi + xiangsi) + "")) + "");
-//            baifen = baifen.substring(baifen.indexOf(".") + 1, baifen.indexOf(".") + 3);
-//        } catch (Exception e) {
-//            baifen = "0";
-//        }
-//        if (baifen.length() <= 0) {
-//            baifen = "0";
-//        }
-//        if (busi == 0) {
-//            baifen = "100";
-//        }
-//        Logger.i("图片相似像素结果:", "相似像素数量：" + xiangsi + " 不相似像素数量：" + busi + " 相似率：" + Integer.parseInt(baifen) + "%");
-//        return Integer.parseInt(baifen);
-//
-//
-//    }
+    //    /**
+    //     * 横向拼接一组（多张）图像
+    //     *
+    //     * @param pics    将要拼接的图像
+    //     * @param type    图像写入格式
+    //     * @param dst_pic 图像写入路径
+    //     * @return
+    //     */
+    //    public static boolean joinImageListHorizontal(String[] pics, String type, String dst_pic) {
+    //        try {
+    //            int len = pics.length;
+    //            if (len < 1) {
+    //                System.out.println("pics len < 1");
+    //                return false;
+    //            }
+    //            File[] src = new File[len];
+    //            BufferedImage[] images = new BufferedImage[len];
+    //            int[][] imageArrays = new int[len][];
+    //            for (int i = 0; i < len; i++) {
+    //                src[i] = new File(pics[i]);
+    //                images[i] = ImageIO.read(src[i]);
+    //                int width = images[i].getWidth();
+    //                int height = images[i].getHeight();
+    //                imageArrays[i] = new int[width * height];// 从图片中读取RGB
+    //                imageArrays[i] = images[i].getRGB(0, 0, width, height, imageArrays[i], 0, width);
+    //            }
+    //
+    //            int dst_width = 0;
+    //            int dst_height = images[0].getHeight();
+    //            for (int i = 0; i < images.length; i++) {
+    //                dst_height = dst_height > images[i].getHeight() ? dst_height : images[i].getHeight();
+    //                dst_width += images[i].getWidth();
+    //            }
+    //            //System.out.println(dst_width);
+    //            //System.out.println(dst_height);
+    //            if (dst_height < 1) {
+    //                System.out.println("dst_height < 1");
+    //                return false;
+    //            }
+    //            /*
+    //             * 生成新图片
+    //             */
+    //            BufferedImage ImageNew = new BufferedImage(dst_width, dst_height, BufferedImage.TYPE_INT_RGB);
+    //            int width_i = 0;
+    //            for (int i = 0; i < images.length; i++) {
+    //                ImageNew.setRGB(width_i, 0, images[i].getWidth(), dst_height, imageArrays[i], 0, images[i].getWidth());
+    //                width_i += images[i].getWidth();
+    //            }
+    //            File outFile = new File(dst_pic);
+    //            ImageIO.write(ImageNew, type, outFile);// 写图片
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            return false;
+    //        }
+    //        return true;
+    //    }
+    //
+    //    /**
+    //     * 纵向拼接图片（两张）
+    //     *
+    //     * @param firstSrcImagePath  读取的第一张图片
+    //     * @param secondSrcImagePath 读取的第二张图片
+    //     * @param imageFormat        图片写入格式
+    //     * @param toPath             图片写入路径
+    //     */
+    //    public static void joinImagesVertical(String firstSrcImagePath, String secondSrcImagePath, String imageFormat,
+    //                                          String toPath) {
+    //        try {
+    //            //读取第一张图片
+    //            File fileOne = new File(firstSrcImagePath);
+    //            BufferedImage imageOne = ImageIO.read(fileOne);
+    //            int width = imageOne.getWidth();//图片宽度
+    //            int height = imageOne.getHeight();//图片高度
+    //            //从图片中读取RGB
+    //            int[] imageArrayOne = new int[width * height];
+    //            imageArrayOne = imageOne.getRGB(0, 0, width, height, imageArrayOne, 0, width);
+    //
+    //            //对第二张图片做相同的处理
+    //            File fileTwo = new File(secondSrcImagePath);
+    //            BufferedImage imageTwo = ImageIO.read(fileTwo);
+    //            int width2 = imageTwo.getWidth();
+    //            int height2 = imageTwo.getHeight();
+    //            int[] ImageArrayTwo = new int[width2 * height2];
+    //            ImageArrayTwo = imageTwo.getRGB(0, 0, width, height, ImageArrayTwo, 0, width);
+    //            //ImageArrayTwo  =  imageTwo.getRGB(0,0,width2,height2,ImageArrayTwo,0,width2);
+    //
+    //            //生成新图片
+    //            //int width3 = (width>width2 || width==width2)?width:width2;
+    //            BufferedImage imageNew = new BufferedImage(width, height * 2, BufferedImage.TYPE_INT_RGB);
+    //            //BufferedImage  imageNew  =  new  BufferedImage(width3,height+height2,BufferedImage.TYPE_INT_RGB);
+    //            imageNew.setRGB(0, 0, width, height, imageArrayOne, 0, width);//设置上半部分的RGB
+    //            imageNew.setRGB(0, height, width, height, ImageArrayTwo, 0, width);//设置下半部分的RGB
+    //            //imageNew.setRGB(0,height,width2,height2,ImageArrayTwo,0,width2);//设置下半部分的RGB
+    //
+    //            File outFile = new File(toPath);
+    //            ImageIO.write(imageNew, imageFormat, outFile);//写图片
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
+    //
+    //    /**
+    //     * 纵向拼接一组（多张）图像
+    //     *
+    //     * @param pics    将要拼接的图像数组
+    //     * @param type    写入图像类型
+    //     * @param dst_pic 写入图像路径
+    //     * @return
+    //     */
+    //    public static boolean joinImageListVertical(String[] pics, String type, String dst_pic) {
+    //        try {
+    //            int len = pics.length;
+    //            if (len < 1) {
+    //                System.out.println("pics len < 1");
+    //                return false;
+    //            }
+    //            File[] src = new File[len];
+    //            BufferedImage[] images = new BufferedImage[len];
+    //            int[][] imageArrays = new int[len][];
+    //            for (int i = 0; i < len; i++) {
+    //                //System.out.println(i);
+    //                src[i] = new File(pics[i]);
+    //                images[i] = ImageIO.read(src[i]);
+    //                int width = images[i].getWidth();
+    //                int height = images[i].getHeight();
+    //                imageArrays[i] = new int[width * height];// 从图片中读取RGB
+    //                imageArrays[i] = images[i].getRGB(0, 0, width, height, imageArrays[i], 0, width);
+    //            }
+    //
+    //            int dst_height = 0;
+    //            int dst_width = images[0].getWidth();
+    //            for (int i = 0; i < images.length; i++) {
+    //                dst_width = dst_width > images[i].getWidth() ? dst_width : images[i].getWidth();
+    //                dst_height += images[i].getHeight();
+    //            }
+    //            //System.out.println(dst_width);
+    //            //System.out.println(dst_height);
+    //            if (dst_height < 1) {
+    //                System.out.println("dst_height < 1");
+    //                return false;
+    //            }
+    //            /*
+    //             * 生成新图片
+    //             */
+    //            BufferedImage ImageNew = new BufferedImage(dst_width, dst_height, BufferedImage.TYPE_INT_RGB);
+    //            int height_i = 0;
+    //            for (int i = 0; i < images.length; i++) {
+    //                ImageNew.setRGB(0, height_i, dst_width, images[i].getHeight(), imageArrays[i], 0, dst_width);
+    //                height_i += images[i].getHeight();
+    //            }
+    //            File outFile = new File(dst_pic);
+    //            ImageIO.write(ImageNew, type, outFile);// 写图片
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            return false;
+    //        }
+    //        return true;
+    //    }
+    //
+    //    /**
+    //     * 合并图片(按指定初始x、y坐标将附加图片贴到底图之上)
+    //     *
+    //     * @param negativeImagePath 背景图片路径
+    //     * @param additionImagePath 附加图片路径
+    //     * @param x                 附加图片的起始点x坐标
+    //     * @param y                 附加图片的起始点y坐标
+    //     * @param toPath            图片写入路径
+    //     * @throws IOException
+    //     */
+    //    public static void mergeBothImage(String negativeImagePath, String additionImagePath, String iamgeFromat, int x,
+    //                                      int y, String toPath) throws IOException {
+    //        InputStream is = null;
+    //        InputStream is2 = null;
+    //        OutputStream os = null;
+    //        try {
+    //            is = new FileInputStream(negativeImagePath);
+    //            is2 = new FileInputStream(additionImagePath);
+    //            BufferedImage image = ImageIO.read(is);
+    //            BufferedImage image2 = ImageIO.read(is2);
+    //            Graphics g = image.getGraphics();
+    //            g.drawImage(image2, x, y, null);
+    //            os = new FileOutputStream(toPath);
+    //            ImageIO.write(image, iamgeFromat, os);//写图片
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        } finally {
+    //            if (os != null) {
+    //                os.close();
+    //            }
+    //            if (is2 != null) {
+    //                is2.close();
+    //            }
+    //            if (is != null) {
+    //                is.close();
+    //            }
+    //        }
+    //    }
+    //
+    //    /**
+    //     * 将一组图片一次性附加合并到底图上
+    //     *
+    //     * @param negativeImagePath 源图像（底图）路径
+    //     * @param additionImageList 附加图像信息列表
+    //     * @param imageFormat       图像写入格式
+    //     * @param toPath            图像写入路径
+    //     * @throws IOException
+    //     */
+    //    public static void mergeImageList(String negativeImagePath, List additionImageList, String imageFormat, String
+    //            toPath) throws IOException {
+    //        InputStream is = null;
+    //        InputStream is2 = null;
+    //        OutputStream os = null;
+    //        try {
+    //            is = new FileInputStream(negativeImagePath);
+    //            BufferedImage image = ImageIO.read(is);
+    //            //Graphics g=image.getGraphics();
+    //            Graphics2D g = image.createGraphics();
+    //            BufferedImage image2 = null;
+    //            if (additionImageList != null) {
+    //                for (int i = 0; i < additionImageList.size(); i++) {
+    //                    //解析附加图片信息：x坐标、 y坐标、 additionImagePath附加图片路径
+    //                    //图片信息存储在一个数组中
+    //                    String[] additionImageInfo = (String[]) additionImageList.get(i);
+    //                    int x = Integer.parseInt(additionImageInfo[0]);
+    //                    int y = Integer.parseInt(additionImageInfo[1]);
+    //                    String additionImagePath = additionImageInfo[2];
+    //                    //读取文件输入流，并合并图片
+    //                    is2 = new FileInputStream(additionImagePath);
+    //                    //System.out.println(x+"  :  "+y+"  :  "+additionImagePath);
+    //                    image2 = ImageIO.read(is2);
+    //                    g.drawImage(image2, x, y, null);
+    //                }
+    //            }
+    //            os = new FileOutputStream(toPath);
+    //            ImageIO.write(image, imageFormat, os);//写图片
+    //            //JPEGImageEncoder enc=JPEGCodec.createJPEGEncoder(os);
+    //            //enc.encode(image);
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        } finally {
+    //            if (os != null) {
+    //                os.close();
+    //            }
+    //            if (is2 != null) {
+    //                is2.close();
+    //            }
+    //            if (is != null) {
+    //                is.close();
+    //            }
+    //        }
+    //    }
+    //
+    //
+    //    /**
+    //     * 图片文件转成二进制
+    //     *
+    //     * @param file
+    //     * @return
+    //     */
+    //    public static String[][] toBinary(File file) {
+    //        int[] rgb = new int[3];
+    //
+    //        BufferedImage bi = null;
+    //        try {
+    //            bi = ImageIO.read(file);
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //
+    //        int width = bi.getWidth();
+    //        int height = bi.getHeight();
+    //        int minx = bi.getMinX();
+    //        int miny = bi.getMinY();
+    //        String[][] list = new String[width][height];
+    //        for (int i = minx; i < width; i++) {
+    //            for (int j = miny; j < height; j++) {
+    //                int pixel = bi.getRGB(i, j);
+    //                rgb[0] = (pixel & 0xff0000) >> 16;
+    //                rgb[1] = (pixel & 0xff00) >> 8;
+    //                rgb[2] = (pixel & 0xff);
+    //                list[i][j] = rgb[0] + "," + rgb[1] + "," + rgb[2];
+    //
+    //            }
+    //        }
+    //        return list;
+    //
+    //    }
+    //
+    //    /**
+    //     * 比较俩个图片的相似度
+    //     *
+    //     * @param image1
+    //     * @param image2
+    //     * @return 图片相似度
+    //     */
+    //    public static float compareImage(File image1, File image2) {
+    //        String[][] list1 = toBinary(image1);
+    //        String[][] list2 = toBinary(image2);
+    //        int xiangsi = 0;
+    //        int busi = 0;
+    //        int i = 0, j = 0;
+    //        for (String[] strings : list1) {
+    //            if ((i + 1) == list1.length) {
+    //                continue;
+    //            }
+    //            for (int m = 0; m < strings.length; m++) {
+    //                try {
+    //                    String[] value1 = list1[i][j].toString().split(",");
+    //                    String[] value2 = list2[i][j].toString().split(",");
+    //                    int k = 0;
+    //                    for (int n = 0; n < value2.length; n++) {
+    //                        if (Math.abs(Integer.parseInt(value1[k]) - Integer.parseInt(value2[k])) < 5) {
+    //                            xiangsi++;
+    //                        } else {
+    //                            busi++;
+    //                        }
+    //                    }
+    //                } catch (RuntimeException e) {
+    //                    continue;
+    //                }
+    //                j++;
+    //            }
+    //            i++;
+    //        }
+    //
+    //        list1 = toBinary(image1);
+    //        list2 = toBinary(image2);
+    //        i = 0;
+    //        j = 0;
+    //        for (String[] strings : list1) {
+    //            if ((i + 1) == list1.length) {
+    //                continue;
+    //            }
+    //            for (int m = 0; m < strings.length; m++) {
+    //                try {
+    //                    String[] value1 = list1[i][j].toString().split(",");
+    //                    String[] value2 = list2[i][j].toString().split(",");
+    //                    int k = 0;
+    //                    for (int n = 0; n < value2.length; n++) {
+    //                        if (Math.abs(Integer.parseInt(value1[k]) - Integer.parseInt(value2[k])) < 5) {
+    //                            xiangsi++;
+    //                        } else {
+    //                            busi++;
+    //                        }
+    //                    }
+    //                } catch (RuntimeException e) {
+    //                    continue;
+    //                }
+    //                j++;
+    //            }
+    //            i++;
+    //        }
+    //        String baifen = "";
+    //        try {
+    //            baifen = ((Double.parseDouble(xiangsi + "") / Double.parseDouble((busi + xiangsi) + "")) + "");
+    //            baifen = baifen.substring(baifen.indexOf(".") + 1, baifen.indexOf(".") + 3);
+    //        } catch (Exception e) {
+    //            baifen = "0";
+    //        }
+    //        if (baifen.length() <= 0) {
+    //            baifen = "0";
+    //        }
+    //        if (busi == 0) {
+    //            baifen = "100";
+    //        }
+    //        Logger.i("图片相似像素结果:", "相似像素数量：" + xiangsi + " 不相似像素数量：" + busi + " 相似率：" + Integer.parseInt(baifen) + "%");
+    //        return Integer.parseInt(baifen);
+    //
+    //
+    //    }
 
     /**
      * 水平翻转处理
