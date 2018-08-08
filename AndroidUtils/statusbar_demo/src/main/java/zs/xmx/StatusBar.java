@@ -1,4 +1,4 @@
-package zs.xmx.utils.bar;
+package zs.xmx;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -43,13 +43,12 @@ import android.view.WindowManager;
  *
  *              6.todo 底部虚拟键,阻挡布局测试
  *              7.todo 状态栏图标适配: 判断系统使用的主题,白底黑字,黑底白字,6.0以上和6.0以下的状态栏适配方案
- *             //todo 状态栏图标适配: 只有小米和魅族提供了,以及Android 6.0以上的API
+ *             //todo 状态栏图标适配: 魅族提供了,以及Android 6.0以上的API
+ *             //todo 在代码中传一个View,里面写代码设置paddingTop的值,可以替代在布局设置fitsSystemWindows属性
  *
  * //todo 有时间看下--> 拿到DecorView,看里面源码找到状态栏文字图标属性的方法,然后反射换掉(只是思路)
  * //todo 需要测试横屏竖屏,状态栏和虚拟键效果
  *
- * getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
- * getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//恢复状态栏白色字体
  *
  *
 5.0以上虚拟按键处理??? 在values-v21目录的style文件主题加上以下属性(todo 查资料看下,下面代码也实现了)
@@ -62,7 +61,7 @@ import android.view.WindowManager;
  *
  * ---------------------------------
  * @新增内容 //todo 使用流程
- *          //理一下自己写的API,有点懵了
+ *          //todo 新增一个方法传一个布局,
  *
  */
 public class StatusBar {
@@ -92,9 +91,7 @@ public class StatusBar {
     }
 
     /**
-     * todo SystemUi和flag哪几个属性需要测试下
-     * <p>
-     * 设置透明状态栏
+     * 设置透明状态栏(这个就是沉浸式)
      * <p>
      * 注意:需在顶部控件布局中加入以下属性让内容出现在状态栏之下:
      * android:clipToPadding="true"     // true 会贴近上层布局 ; false 与上层布局有一定间隙
@@ -108,16 +105,14 @@ public class StatusBar {
         //5.0及以上
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
-            /**
-             * WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS 状态栏透明
-             * WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION 虚拟按键透明
-             */
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  //API16 视图延伸至状态栏区域，状态栏悬浮于视图之上
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE); //保持整个View稳定, 常和控制System UI悬浮, 隐藏的Flags共用, 使View不会因为System UI的变化而重新layout。
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS //状态栏透明
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION); //虚拟按键透明
             //SDK21 用于去除部分机型默认透明状态栏有黑色阴影背景
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
+            window.setStatusBarColor(Color.TRANSPARENT);//6.0设置状态栏透明
+            // window.setNavigationBarColor(Color.TRANSPARENT);//6.0设置虚拟按键透明
             //4.4到5.0
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
@@ -126,35 +121,54 @@ public class StatusBar {
     }
 
     /**
-     * 判断机型,设置状态栏图标主题
+     * 设置透明状态栏(这个就是沉浸式)
+     *
+     * @param activity
+     * @param view     顶部延伸到状态栏的控件
+     */
+    public static void setTransparentStatusBar(Activity activity, View view) {
+        setTransparentStatusBar(activity);
+        //todo 根据状态栏高度设置paddingTop的值
+    }
+
+    /**
+     * 设置透明状态栏(这个就是沉浸式)
+     *
+     * @param activity
+     * @param viewGroup 顶部延伸到状态栏的布局
+     */
+    public static void setTransparentStatusBar(Activity activity, ViewGroup viewGroup) {
+        setTransparentStatusBar(activity);
+        //todo 根据状态栏高度设置paddingTop的值
+    }
+
+    /**
+     * 判断机型,设置状态栏图标主题(只关注状态栏颜色)
      * <p>
      * decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  //API16 视图延伸至状态栏区域，状态栏悬浮于视图之上
      * | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
      * | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR  //API23 设置状态栏为黑色文字,Flag只有在使用了FLAG_DRWS_SYSTEM_BAR_BACKGROUNDS，并且没有使用FLAG_TRANSLUCENT_STATUS时才有效
      * | View.SYSTEM_UI_FLAG_LAYOUT_STABLE); //保持整个View稳定, 常和控制System UI悬浮, 隐藏的Flags共用, 使View不会因为System UI的变化而重新layout。
-     * <p>
-     * //todo 先设置为透明,再是机型控制状态栏
      */
     public static void setStatusBarLightMode(Activity activity, boolean isLightMode) {
         switch (Build.MANUFACTURER.toUpperCase()) {
 
             case "MEIZU"://魅族Flyme4+
-
+                //todo 做完其他补上
                 break;
             default://默认
-                //6.0以上Android版本  todo 设置主体其实就依据,测试其他属性效果
+                View decorView = activity.getWindow().getDecorView();
+                //6.0以上Android版本
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    View decorView = activity.getWindow().getDecorView();
-                    if (decorView != null) {
-                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  //API16 视图延伸至状态栏区域，状态栏悬浮于视图之上
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR  //API23 设置状态栏为黑色文字,Flag只有在使用了FLAG_DRWS_SYSTEM_BAR_BACKGROUNDS，并且没有使用FLAG_TRANSLUCENT_STATUS时才有效
-                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE); //保持整个View稳定, 常和控制System UI悬浮, 隐藏的Flags共用, 使View不会因为System UI的变化而重新layout。
-                    } else {
-                        //6.0以上版本自定义黑色半透明背景,白色字体
-                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//恢复状态栏白色字体
-                        setStatusBarColor(activity, Color.argb(90, 0, 0, 0));
+                    if (isLightMode) {
+                        //设置状态栏黑色字体
+                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                     }
+                } else {
+                    //6.0以上版本自定义黑色半透明背景,白色字体
+                    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//恢复状态栏白色字体
+                    setStatusBarColor(activity, Color.argb(90, 0, 0, 0));
+
                 }
                 break;
         }
@@ -169,6 +183,7 @@ public class StatusBar {
     @SuppressLint("PrivateApi")
     private static int getStatusBarHeight(Activity activity) {
         int result = -1;
+        //5.0才出来的API
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int resourceId = activity.getResources()
                     .getIdentifier("status_bar_height", "dimen", "android");
@@ -206,15 +221,28 @@ public class StatusBar {
 
     /**
      * 设置状态栏的颜色
-     * 1.将状态栏透明
-     * 2.添加一个自定义颜色的View覆盖状态栏
+     * 1.不具备沉浸式状态栏的功能
+     * 2.不需要设置fitsSystemWindows属性和paddingTop高度适配
+     * <p>
+     * 5.0以上使用getWindow().setStatusBarColor() API
+     * 4.4到5.0 添加一个自定义颜色的View覆盖状态栏
      *
      * @param activity
      * @param argb     getResources().getColor(R.color.colorPrimary)
      */
     public static void setStatusBarColor(Activity activity, int argb) {
-        setTransparentStatusBar(activity);
-        addStatusBarView(activity, argb);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //5.0以上API设置状态栏颜色
+            activity.getWindow().setStatusBarColor(argb);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //4.4到5.0版本,使用我们的方案设置状态栏颜色
+            ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+            // 移除半透明矩形,以免叠加
+            if (contentView.getChildCount() > 1) {
+                contentView.removeViewAt(1);
+            }
+            contentView.addView(createStatusBarView(activity, argb));
+        }
     }
 
     /**
@@ -277,29 +305,6 @@ public class StatusBar {
         return w > 0 || h > 0;
     }
 
-    /**
-     * 添加状态栏View
-     *
-     * @param argb Color.argb(alpha, 0, 0, 0)  颜色属性
-     */
-    private static void addStatusBarView(Activity activity, int argb) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //5.0以上API设置状态栏颜色
-            activity.getWindow().setStatusBarColor(argb);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //4.4到5.0版本,使用我们的方案设置状态栏颜色
-            //todo 4.4以下看下怎么处理
-            ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-            // 移除半透明矩形,以免叠加
-            if (contentView.getChildCount() > 1) {
-                contentView.removeViewAt(1);
-            }
-            contentView.addView(createStatusBarView(activity, argb));
-        }
-
-
-    }
 
     /**
      * 添加虚拟按键的View
@@ -312,7 +317,6 @@ public class StatusBar {
             activity.getWindow().setNavigationBarColor(argb);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //4.4到5.0版本,使用我们的方案设置虚拟按键颜色
-            //todo 4.4以下看下怎么处理
             createNavigationBottomView(activity, argb);
         }
     }
