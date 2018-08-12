@@ -7,8 +7,17 @@
     android:orientation="vertical"
     tools:context="zs.xmx.MainActivity">
 
+    <LinearLayout
+
+        android:id="@+id/ll_topView"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#de2626"
+        android:orientation="vertical"
+        />
+
     <TextView
-        android:paddingTop="25dp"
+        android:id="@+id/tv_topView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
@@ -19,12 +28,19 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
+        android:gravity="center_vertical"
         android:text="Hello World!"
         />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="#000"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#eee"/>
 
 </LinearLayout>
