@@ -12,8 +12,11 @@
             <option value="$PROJECT_DIR$/gradleTest" />
             <option value="$PROJECT_DIR$/keyboard_demo" />
             <option value="$PROJECT_DIR$/label_demo" />
+            <option value="$PROJECT_DIR$/lib-subutils" />
+            <option value="$PROJECT_DIR$/lib-utils" />
             <option value="$PROJECT_DIR$/prefenence" />
             <option value="$PROJECT_DIR$/statusbar_demo" />
+            <option value="$PROJECT_DIR$/statusbartest" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

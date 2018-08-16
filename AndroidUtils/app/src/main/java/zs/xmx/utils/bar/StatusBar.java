@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -23,6 +24,7 @@ import java.lang.reflect.Field;
  *            2.设置透明的虚拟按键
  *            3.设置状态栏/虚拟按键纯色
  *            4.设置亮色主体(白底黑字)
+ *
  *
  * @使用方法  不传布局
  *             setTransparentNavigationBottom/statusBar(context,null) 需要自己处理视图延伸至状态栏/虚拟按键区域
@@ -45,9 +47,10 @@ import java.lang.reflect.Field;
  *              2.代码动态将顶部控件paddingTop/marginTop状态栏高度,目前测试下来可行的方案,而且这种方案可以不在布局设置fitsSystemWindows属性,防止软键盘问题
  *              3.Activity实现了Fragment的标题栏
  *              4.如果Fragment的状态栏效果是纯色的,可以在该Fragment顶部动态设置同状态栏高度的View
- *
+ *              5.DrawerLayout与fragment当作主界面类似,在其显示内容的界面处理即可
+ *              6.toolbar直接设置padding有位置显示不正确问题
  *             //todo 小米也已经重归正途了
- *             //todo DrawableLayout 待测试处理
+ *
  *
  *
  *
@@ -415,6 +418,26 @@ public class StatusBar {
         navigationBottomView.setLayoutParams(params);
         navigationBottomView.setBackgroundColor(argb);
         return navigationBottomView;
+    }
+
+
+    /**
+     * //todo 看情况写在其他类
+     * 隐藏虚拟按键
+     *
+     * @param activity
+     */
+    public static void setNavBarImmersive(@NonNull final Activity activity) {
+        Window window = activity.getWindow();
+        View decorView = window.getDecorView();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        int uiOptions = 0;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
 

@@ -7,8 +7,10 @@
       <module fileurl="file://$PROJECT_DIR$/gradleTest/gradleTest.iml" filepath="$PROJECT_DIR$/gradleTest/gradleTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/keyboard_demo/keyboard_demo.iml" filepath="$PROJECT_DIR$/keyboard_demo/keyboard_demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/label_demo/label_demo.iml" filepath="$PROJECT_DIR$/label_demo/label_demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-subutils/lib-subutils.iml" filepath="$PROJECT_DIR$/lib-subutils/lib-subutils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-utils/lib-utils.iml" filepath="$PROJECT_DIR$/lib-utils/lib-utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/prefenence/prefenence.iml" filepath="$PROJECT_DIR$/prefenence/prefenence.iml" />
-      <module fileurl="file://$PROJECT_DIR$/statusbar_demo/statusbar_demo.iml" filepath="$PROJECT_DIR$/statusbar_demo/statusbar_demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/statusbartest/statusbartest.iml" filepath="$PROJECT_DIR$/statusbartest/statusbartest.iml" />
     </modules>
   </component>
 </project>
