@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidUtils.iml" filepath="$PROJECT_DIR$/AndroidUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gradleTest/gradleTest.iml" filepath="$PROJECT_DIR$/gradleTest/gradleTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/keyboard_demo/keyboard_demo.iml" filepath="$PROJECT_DIR$/keyboard_demo/keyboard_demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/label_demo/label_demo.iml" filepath="$PROJECT_DIR$/label_demo/label_demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-subutils/lib-subutils.iml" filepath="$PROJECT_DIR$/lib-subutils/lib-subutils.iml" />

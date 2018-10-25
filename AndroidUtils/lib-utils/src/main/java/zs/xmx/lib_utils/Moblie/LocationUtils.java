@@ -1,4 +1,4 @@
-package zs.xmx.lib_utils.Moblie;
+package zs.xmx.lib_utils.moblie;
 
 import android.content.Context;
 import android.content.Intent;

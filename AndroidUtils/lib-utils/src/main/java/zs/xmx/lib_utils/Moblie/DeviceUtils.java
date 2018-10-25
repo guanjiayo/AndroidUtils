@@ -1,4 +1,4 @@
-package zs.xmx.lib_utils.Moblie;
+package zs.xmx.lib_utils.moblie;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;

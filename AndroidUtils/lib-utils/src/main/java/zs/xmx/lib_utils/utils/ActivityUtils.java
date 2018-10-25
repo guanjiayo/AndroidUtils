@@ -13,7 +13,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import zs.xmx.manager.ActListManager;
+import zs.xmx.lib_utils.manager.ActListManager;
+
 
 /*
  * @创建者     默小铭

@@ -4,8 +4,8 @@ android {
     compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "zs.xmx"
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion 16
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,17 +26,17 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     //    权限机制,插件方法
     implementation('com.github.hotchemi:permissionsdispatcher:2.4.0') {
         exclude module: "support-v13"
     }
-    implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.android.support:design:25.0.0'
-    implementation 'com.android.support:appcompat-v7:25.0.0'
+    implementation 'com.google.code.gson:gson:2.8.3'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    implementation project(':lib-subutils')
+    implementation project(':lib-utils')
 }

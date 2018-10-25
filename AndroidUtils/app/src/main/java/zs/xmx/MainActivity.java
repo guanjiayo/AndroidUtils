@@ -7,9 +7,9 @@ import android.view.View;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import zs.xmx.utils.AlertDialog;
-import zs.xmx.utils.SPUtils;
-import zs.xmx.utils.ToastUtils;
+import zs.xmx.lib_utils.utils.AlertDialog;
+import zs.xmx.lib_utils.utils.SPUtils;
+import zs.xmx.lib_utils.utils.ToastUtils;
 
 public class MainActivity extends AppCompatActivity {
 
