@@ -4,12 +4,13 @@ import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 
-import zs.xmx.Moblie.NetWorkUtils;
-import zs.xmx.R;
-import zs.xmx.receiver.NetWorkReceiver;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import zs.xmx.lib_utils.R;
+import zs.xmx.lib_utils.moblie.NetWorkUtils;
+import zs.xmx.lib_utils.receiver.NetWorkReceiver;
+
 
 /*
  * @创建者     mqm

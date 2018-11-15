@@ -7,16 +7,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import zs.xmx.R;
-import zs.xmx.constant.PermissionsContants;
-import zs.xmx.utils.Logger;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import zs.xmx.lib_utils.R;
+import zs.xmx.lib_utils.constant.PermissionsContants;
+import zs.xmx.lib_utils.utils.Logger;
 
 import static android.provider.Settings.canDrawOverlays;
 

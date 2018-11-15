@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import java.lang.reflect.Field;
+
 
 /*
  * @创建者     默小铭
@@ -25,12 +26,11 @@ import java.lang.reflect.Field;
  *            3.设置状态栏/虚拟按键纯色
  *            4.设置亮色主体(白底黑字)
  *
- *
  * @使用方法  不传布局
  *             setTransparentNavigationBottom/statusBar(context,null) 需要自己处理视图延伸至状态栏/虚拟按键区域
- *           传布局
+ *           传布局,不需要处理
  *
- *           直接设置颜色
+ *           如果直接设置颜色,不需要处理
  *           setNavigationBottomColor/statusBarColor 直接改颜色,其他问题默认不处理
  *
  *           日常使用
@@ -41,17 +41,15 @@ import java.lang.reflect.Field;
  *              1.设置状态栏颜色要写在setContentView(..)后面
  *              2.两个重要属性要写在状态栏要跟随颜色的控件上
  *              3.使用了fitsSystemWindows属性+ScrollView+EditText的布局要注意软键盘问题
+ *              4.如果不是单独使用亮色主题,需要在设置沉浸式状态栏方法后面使用,不然会恢复原来的主题
  *
  *              (思路,博客讲几种方案说明一下
  *              1.状态栏设置只在Fragment中独立做(ViewPager+Fragment的场景只有第一个Fragment生效)
  *              2.代码动态将顶部控件paddingTop/marginTop状态栏高度,目前测试下来可行的方案,而且这种方案可以不在布局设置fitsSystemWindows属性,防止软键盘问题
  *              3.Activity实现了Fragment的标题栏
  *              4.如果Fragment的状态栏效果是纯色的,可以在该Fragment顶部动态设置同状态栏高度的View
- *              5.DrawerLayout与fragment当作主界面类似,在其显示内容的界面处理即可
- *              6.toolbar直接设置padding有位置显示不正确问题
+ *
  *             //todo 小米也已经重归正途了
- *
- *
  *
  *
  * //todo 有时间看下--> 拿到DecorView,看里面源码找到状态栏文字图标属性的方法,然后反射换掉(只是思路)
@@ -96,19 +94,21 @@ public class StatusBar {
      * <p>
      * 给底部第一个布局高度加上状态栏高度
      * <p>
-     * 不传布局,需要自己处理虚拟按键覆盖界面问题
+     * 不传布局,需在顶部控件布局中加入以下属性让内容出现在状态栏之下
      *
      * @param activity
      * @param bottomView
      */
     public static void setTransparentNavigationBottom(Activity activity, View bottomView) {
-        if (bottomView == null) {
-            setTransparentNavigationBottom(activity);
-        } else {
-            setTransparentNavigationBottom(activity);
-            ViewGroup.LayoutParams layoutParams = bottomView.getLayoutParams();
-            layoutParams.height += getNavigationBottomHeight(activity);
-            bottomView.setLayoutParams(layoutParams);
+        if (hasNavigationBottom(activity)) {
+            if (bottomView == null) {
+                setTransparentNavigationBottom(activity);
+            } else {
+                setTransparentNavigationBottom(activity);
+                ViewGroup.LayoutParams layoutParams = bottomView.getLayoutParams();
+                layoutParams.height += getNavigationBottomHeight(activity) + getStatusBarHeight(activity);
+                bottomView.setLayoutParams(layoutParams);
+            }
         }
 
     }
@@ -148,8 +148,7 @@ public class StatusBar {
      * 注意:需在顶部控件布局中加入以下属性让内容出现在状态栏之下:
      * android:clipToPadding="true"     // true 会贴近上层布局 ; false 与上层布局有一定间隙
      * android:fitsSystemWindows="true"   //true 会保留actionBar,title,虚拟按键的空间 ; false 不保留
-     * <p>
-     * 这个方法一般用在BaseActivity的onCreate()中,如果单独的Activity,继承该activity,然后重写颜色方法即可
+     *
      * <p>
      * Android 4.4以下没API,不处理
      */
@@ -187,9 +186,7 @@ public class StatusBar {
             setTransparentStatusBar(activity);
         } else {
             setTransparentStatusBar(activity);
-            ViewGroup.LayoutParams layoutParams = topView.getLayoutParams();
-            layoutParams.height += getStatusBarHeight(activity);
-            topView.setLayoutParams(layoutParams);
+            topView.setPadding(0, topView.getPaddingTop() + getStatusBarHeight(activity), 0, 0);
         }
     }
 
@@ -199,7 +196,7 @@ public class StatusBar {
      * <p>
      * decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  //API16 视图延伸至状态栏区域，状态栏悬浮于视图之上
      * | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-     * | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR  //API23 设置状态栏为黑色文字,Flag只有在使用了FLAG_DRWS_SYSTEM_BAR_BACKGROUNDS，并且没有使用FLAG_TRANSLUCENT_STATUS时才有效
+     * | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR  //API23 设置状态栏为黑色文字,Flag只有在使用了FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS，并且没有使用FLAG_TRANSLUCENT_STATUS时才有效
      * | View.SYSTEM_UI_FLAG_LAYOUT_STABLE); //保持整个View稳定, 常和控制System UI悬浮, 隐藏的Flags共用, 使View不会因为System UI的变化而重新layout。
      */
     public static void setStatusBarLightMode(Activity activity, boolean isLightMode) {
@@ -287,7 +284,6 @@ public class StatusBar {
 
     /**
      * 判断状态栏是否存在
-     * todo 全屏的情况,后面再加
      *
      * @param activity activity
      * @return true :存在   ;  false: 不存在
@@ -352,7 +348,7 @@ public class StatusBar {
         /**5.0之后(包括5.0)的版本**/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int resourceId = activity.getResources()
-                    .getIdentifier("status_bar_height", "dimen", "android");
+                    .getIdentifier("navigation_bar_height", "dimen", "android");
             if (resourceId > 0) {
                 //返回值单位为px
                 height = activity.getResources().getDimensionPixelSize(resourceId);
@@ -382,6 +378,7 @@ public class StatusBar {
      * 屏幕的真正高度减去屏幕内容显示的高度
      */
 
+    @SuppressLint("ObsoleteSdkInt")
     private static boolean hasNavigationBottom(Activity activity) {
         //屏幕的高度  真实物理的屏幕
         Display display = activity.getWindowManager().getDefaultDisplay();
@@ -420,9 +417,7 @@ public class StatusBar {
         return navigationBottomView;
     }
 
-
     /**
-     * //todo 看情况写在其他类
      * 隐藏虚拟按键
      *
      * @param activity

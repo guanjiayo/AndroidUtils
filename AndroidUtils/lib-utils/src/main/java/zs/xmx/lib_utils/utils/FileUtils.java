@@ -26,8 +26,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static zs.xmx.constant.MemoryContants.KB;
-import static zs.xmx.utils.ConvertUtils.byte2FitMemorySize;
+import static zs.xmx.lib_utils.constant.MemoryContants.KB;
+import static zs.xmx.lib_utils.utils.ConvertUtils.byte2FitMemorySize;
 
 /*
  * @创建者     默小铭
@@ -51,8 +51,8 @@ import static zs.xmx.utils.ConvertUtils.byte2FitMemorySize;
  *            15.文件内容转换编码写入文件/将文件转换编码返回内容
  *            16.获取文件的最后修改时间
  *            17.文件重命名
- * ---------------------------------------------     
- * @更新时间   2016/9/27 
+ * ---------------------------------------------
+ * @更新时间   2016/9/27
  * @更新说明
  */
 public class FileUtils {

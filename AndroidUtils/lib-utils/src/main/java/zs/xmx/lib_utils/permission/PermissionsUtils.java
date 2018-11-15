@@ -51,8 +51,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -61,12 +59,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import zs.xmx.utils.DialogUtils;
-import zs.xmx.utils.Logger;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import zs.xmx.lib_utils.utils.DialogUtils;
+import zs.xmx.lib_utils.utils.Logger;
 
-import static zs.xmx.constant.PermissionsContants.CODE_ALL_PERMISSION;
-import static zs.xmx.constant.PermissionsContants.CODE_Mutil_PERMISSION;
-import static zs.xmx.constant.PermissionsContants.requestPermissions;
+import static zs.xmx.lib_utils.constant.PermissionsContants.CODE_ALL_PERMISSION;
+import static zs.xmx.lib_utils.constant.PermissionsContants.CODE_Mutil_PERMISSION;
+import static zs.xmx.lib_utils.constant.PermissionsContants.requestPermissions;
+
 
 public class PermissionsUtils {
 

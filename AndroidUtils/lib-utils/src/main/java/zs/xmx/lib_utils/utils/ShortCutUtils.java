@@ -8,7 +8,7 @@ import android.content.Intent.ShortcutIconResource;
 import android.database.Cursor;
 import android.net.Uri;
 
-import zs.xmx.R;
+import zs.xmx.lib_utils.R;
 
 
 /*

@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.TextView;
 
-import zs.xmx.R;
+import zs.xmx.lib_utils.R;
 
 
 /**

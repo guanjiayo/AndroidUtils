@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/lib-subutils" />
             <option value="$PROJECT_DIR$/lib-utils" />
             <option value="$PROJECT_DIR$/prefenence" />
-            <option value="$PROJECT_DIR$/statusbartest" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

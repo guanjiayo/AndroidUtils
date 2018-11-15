@@ -6,7 +6,8 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
-import zs.xmx.Moblie.SDCardUtils;
+import zs.xmx.lib_utils.moblie.SDCardUtils;
+
 
 /*
  * @创建者     默小铭

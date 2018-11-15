@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import zs.xmx.Moblie.NetWorkUtils;
+import zs.xmx.lib_utils.moblie.NetWorkUtils;
+
 
 
 

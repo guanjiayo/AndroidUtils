@@ -7,25 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static zs.xmx.constant.RegularContants.REGEX_ACCOUT_NUMBER;
-import static zs.xmx.constant.RegularContants.REGEX_CHZ;
-import static zs.xmx.constant.RegularContants.REGEX_DATE;
-import static zs.xmx.constant.RegularContants.REGEX_EMAIL;
-import static zs.xmx.constant.RegularContants.REGEX_IDCARD15;
-import static zs.xmx.constant.RegularContants.REGEX_IDCARD18;
-import static zs.xmx.constant.RegularContants.REGEX_IP;
-import static zs.xmx.constant.RegularContants.REGEX_PASSWORD;
-import static zs.xmx.constant.RegularContants.REGEX_PASSWORD_EXACT;
-import static zs.xmx.constant.RegularContants.REGEX_POSTAL_CODE;
-import static zs.xmx.constant.RegularContants.REGEX_PRICE;
-import static zs.xmx.constant.RegularContants.REGEX_QQ;
-import static zs.xmx.constant.RegularContants.REGEX_SPECIAL_CHARACTERS;
-import static zs.xmx.constant.RegularContants.REGEX_TEL;
-import static zs.xmx.constant.RegularContants.REGEX_TEL_EXACT;
-import static zs.xmx.constant.RegularContants.REGEX_URL;
-import static zs.xmx.constant.RegularContants.REGEX_USERNAME;
-import static zs.xmx.constant.RegularContants.REGEX_USERNAME1;
-import static zs.xmx.constant.RegularContants.REGEX_USERNAME2;
+import static zs.xmx.lib_utils.constant.RegularContants.*;
 
 
 /*

@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import zs.xmx.R;
+import zs.xmx.lib_utils.R;
+
 
 /*
  * @创建者     默小铭

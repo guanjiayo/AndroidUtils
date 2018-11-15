@@ -15,7 +15,7 @@ package zs.xmx.utils;
 
 import android.app.Activity;
 import android.graphics.Rect;
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;

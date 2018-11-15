@@ -16,7 +16,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import static zs.xmx.constant.MemoryContants.KB;
+import static zs.xmx.lib_utils.constant.MemoryContants.KB;
+
 
 /*
  * @创建者     默小铭

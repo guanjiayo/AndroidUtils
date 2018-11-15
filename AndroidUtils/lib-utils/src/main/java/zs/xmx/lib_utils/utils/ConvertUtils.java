@@ -17,8 +17,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import zs.xmx.constant.MemoryContants;
-import zs.xmx.constant.TimeContants;
+import zs.xmx.lib_utils.constant.MemoryContants;
+import zs.xmx.lib_utils.constant.TimeContants;
+
 
 /*
  * @创建者     默小铭

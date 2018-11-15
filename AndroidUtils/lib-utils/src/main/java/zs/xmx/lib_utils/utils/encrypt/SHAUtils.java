@@ -13,7 +13,8 @@ import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static zs.xmx.utils.ConvertUtils.bytes2HexString;
+import static zs.xmx.lib_utils.utils.ConvertUtils.bytes2HexString;
+
 
 /*
  * @创建者     默小铭

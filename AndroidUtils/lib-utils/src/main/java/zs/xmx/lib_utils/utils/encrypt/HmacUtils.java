@@ -6,7 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import static zs.xmx.utils.ConvertUtils.bytes2HexString;
+import static zs.xmx.lib_utils.utils.ConvertUtils.bytes2HexString;
+
 
 /*
  * @创建者     默小铭

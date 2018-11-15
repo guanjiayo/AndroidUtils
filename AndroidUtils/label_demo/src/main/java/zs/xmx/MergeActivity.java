@@ -1,6 +1,6 @@
 package zs.xmx;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 /*
  * @创建者     mqm

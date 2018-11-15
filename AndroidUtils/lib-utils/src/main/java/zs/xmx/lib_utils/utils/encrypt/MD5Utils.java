@@ -9,10 +9,11 @@ import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import zs.xmx.utils.CleanUtils;
-import zs.xmx.utils.FileUtils;
+import zs.xmx.lib_utils.utils.CleanUtils;
+import zs.xmx.lib_utils.utils.FileUtils;
 
-import static zs.xmx.utils.ConvertUtils.bytes2HexString;
+import static zs.xmx.lib_utils.utils.ConvertUtils.bytes2HexString;
+
 
 /*
  * @创建者     默小铭

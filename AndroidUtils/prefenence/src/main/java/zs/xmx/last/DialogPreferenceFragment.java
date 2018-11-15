@@ -2,7 +2,7 @@ package zs.xmx.last;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import zs.xmx.R;
 

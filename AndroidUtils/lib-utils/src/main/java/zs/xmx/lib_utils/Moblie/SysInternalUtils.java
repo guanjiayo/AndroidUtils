@@ -6,7 +6,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 
-import static zs.xmx.utils.ConvertUtils.byte2FitMemorySize;
+import static zs.xmx.lib_utils.utils.ConvertUtils.byte2FitMemorySize;
 
 
 /*

@@ -31,17 +31,15 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.FileInputStream;
 
-import zs.xmx.R;
+import zs.xmx.lib_utils.R;
 
-import static zs.xmx.R.id.iv;
-import static zs.xmx.R.id.partload;
 
 public class BitmapHandleDemo extends Activity {
     private ImageView mImageView;
-    private Bitmap mBitmap = null;
-    private File   mFile   = null;
-    private int SCREEN_WIDTH, SCREEN_HEIGHT;
-    private int shiftpx = 0; //偏移量
+    private Bitmap    mBitmap = null;
+    private File      mFile   = null;
+    private int       SCREEN_WIDTH, SCREEN_HEIGHT;
+    private int    shiftpx = 0; //偏移量
     private Button mBtn_choosepic;
     private Button mBtn_change_option;
     private Button mBtn_change_rgb;
@@ -66,11 +64,11 @@ public class BitmapHandleDemo extends Activity {
     }
 
     private void initView() {
-        mImageView = (ImageView) findViewById(iv);
+        mImageView = (ImageView) findViewById(R.id.iv);
         mBtn_choosepic = (Button) findViewById(R.id.choosepic);
         mBtn_change_option = (Button) findViewById(R.id.change_option);
         mBtn_change_rgb = (Button) findViewById(R.id.change_rgb);
-        mBtn_partload = (Button) findViewById(partload);
+        mBtn_partload = (Button) findViewById(R.id.partload);
         mBtn_offset = (Button) findViewById(R.id.offset);
     }
 

@@ -9,11 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import zs.xmx.Moblie.SDCardUtils;
+import zs.xmx.lib_utils.moblie.SDCardUtils;
 
-import static zs.xmx.utils.ScreenUtils.getScreenHeight;
-import static zs.xmx.utils.ScreenUtils.getScreenWidth;
-import static zs.xmx.utils.ScreenUtils.getStatusBarHeight;
+import static zs.xmx.lib_utils.utils.ScreenUtils.getScreenHeight;
+import static zs.xmx.lib_utils.utils.ScreenUtils.getScreenWidth;
+import static zs.xmx.lib_utils.utils.ScreenUtils.getStatusBarHeight;
 
 
 /*

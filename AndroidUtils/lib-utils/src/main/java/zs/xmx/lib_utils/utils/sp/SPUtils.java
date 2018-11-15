@@ -1,13 +1,14 @@
-package zs.xmx.lib_utils.utils;
+package zs.xmx.lib_utils.utils.sp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.util.SimpleArrayMap;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+
+import androidx.collection.SimpleArrayMap;
 
 
 /*
@@ -20,16 +21,16 @@ import java.util.Map;
  *            2.apply是API>9出现的,用SharedPreferencesCompat适配
  *      ---------------------------------------------
  *
- *             使用前,要在基类先实例化(上下文用全局)
+ *             使用前,要在基类(BaseActivity,BaseApplication)先实例化(上下文用全局)
  *             SPUtils.getInstant(Context context, String spName);
  *             调用:
  *             SPUtils.PutXX()
- *
+ *   todo 有空将这个类改造成Kotlin
  */
 public class SPUtils {
 
-    private static SharedPreferences        sp;
-    private static SharedPreferences.Editor editor; //编辑器
+    private static SharedPreferences               sp;
+    private static SharedPreferences.Editor        editor; //编辑器
     private static SimpleArrayMap<String, SPUtils> SP_UTILS_MAP = new SimpleArrayMap<>();
 
     private SPUtils(Context context, String spName) {

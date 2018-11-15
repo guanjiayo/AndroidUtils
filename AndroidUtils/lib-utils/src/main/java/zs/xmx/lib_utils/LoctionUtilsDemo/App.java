@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
-import zs.xmx.utils.CrashUtils;
+import zs.xmx.lib_utils.utils.CrashUtils;
 
 
 /**

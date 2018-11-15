@@ -1,8 +1,5 @@
 package zs.xmx.lib_utils.utils.bar;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.LayoutRes;
-import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -12,7 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.LayoutRes;
 
 /*
  * @创建者     默小铭

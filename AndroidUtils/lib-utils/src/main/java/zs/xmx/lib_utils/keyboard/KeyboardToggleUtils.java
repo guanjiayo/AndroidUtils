@@ -6,7 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import zs.xmx.utils.GlobalUtils;
+import zs.xmx.lib_utils.utils.GlobalUtils;
+
 
 /*
  * @创建者     默小铭

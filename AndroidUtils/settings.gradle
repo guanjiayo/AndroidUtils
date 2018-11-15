@@ -1,1 +1,1 @@
-include ':app', ':prefenence', ':label_demo', ':keyboard_demo', ':statusbartest', ':lib-utils', ':lib-subutils'
+include ':app', ':prefenence', ':label_demo', ':keyboard_demo', ':lib-utils', ':lib-subutils'

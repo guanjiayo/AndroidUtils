@@ -23,8 +23,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import zs.xmx.bean.AppInfo;
-import zs.xmx.utils.encrypt.SHAUtils;
+import zs.xmx.lib_utils.bean.AppInfo;
+import zs.xmx.lib_utils.utils.encrypt.SHAUtils;
 
 
 /*
