@@ -1,12 +1,16 @@
 package zs.xmx.lib_utils.utils.sp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.collection.SimpleArrayMap;
 
@@ -14,7 +18,6 @@ import androidx.collection.SimpleArrayMap;
 /*
  * @创建者     默小铭
  * @博客       http://blog.csdn.net/u012792686
- * @创建时间   2016/9/4 21:27
  * @本类描述	  SharedPreferences 工具类
  * @内容说明   SharedPreferences 功能的封装
  *            1.apply是异步的,commit是同步的
@@ -25,7 +28,9 @@ import androidx.collection.SimpleArrayMap;
  *             SPUtils.getInstant(Context context, String spName);
  *             调用:
  *             SPUtils.PutXX()
- *   todo 有空将这个类改造成Kotlin
+ *
+ *    * todo 改造成Kotlin,把object 移除掉,
+ * todo getParam 默认值在这里直接给了,后面不再处理
  */
 public class SPUtils {
 
@@ -33,6 +38,7 @@ public class SPUtils {
     private static SharedPreferences.Editor        editor; //编辑器
     private static SimpleArrayMap<String, SPUtils> SP_UTILS_MAP = new SimpleArrayMap<>();
 
+    @SuppressLint("CommitPrefEdits")
     private SPUtils(Context context, String spName) {
         sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
         editor = sp.edit();
@@ -61,7 +67,6 @@ public class SPUtils {
      * 获取 SharedPreferences 路径
      * 一般是 /data/data/com.xxx.xxx/shared_prefs
      *
-     * @param context
      * @return SharedPreferences 路径
      */
     public static String getSharedPrefs_Path(Context context) {
@@ -74,7 +79,7 @@ public class SPUtils {
      * @param key    键
      * @param object 值
      */
-    public static void putParam(String key, Object object) {
+    public static void putParam(@NotNull String key, @NotNull Object object) {
 
         if (object instanceof String) {
             editor.putString(key, (String) object);
@@ -86,6 +91,8 @@ public class SPUtils {
             editor.putFloat(key, (Float) object);
         } else if (object instanceof Long) {
             editor.putLong(key, (Long) object);
+        } else if (object instanceof Set) {
+            editor.putStringSet(key, (Set<String>) object);
         } else {
             editor.putString(key, object.toString());
         }
@@ -99,6 +106,13 @@ public class SPUtils {
      * @param key           键
      * @param defaultObject 默认值
      * @return 键对应的值
+     * <p>
+     * //如果要往Set集合村多个数据,需要在新的集合添加值,否则会报错
+     * HashSet<String> hashSet = (HashSet<String>) SPUtils.get(mContext, Constant.HISTORYTEXT, new HashSet<String>());
+     * //关键操作 需要在新的集合添加值 然后再提交修改
+     * Set<String> changeData = new HashSet<>(hashSet);
+     * changeData.add(key);
+     * boolean isSuccess = SPUtils.putCommit(mContext, Constant.HISTORYTEXT, changeData);
      */
     public static Object getParam(String key, Object defaultObject) {
         if (defaultObject instanceof String) {
@@ -111,6 +125,8 @@ public class SPUtils {
             return sp.getFloat(key, (Float) defaultObject);
         } else if (defaultObject instanceof Long) {
             return sp.getLong(key, (Long) defaultObject);
+        } else if (defaultObject instanceof Set) {
+            return sp.getStringSet(key, (Set<String>) defaultObject);
         } else {
             return sp.getString(key, null);
         }
@@ -118,9 +134,17 @@ public class SPUtils {
     }
 
     /**
+     * Set 数据
+     * <p>
+     * 如果需要保存不会重复,而且不需要顺序,可以使用这种方式
+     */
+    public static void putStringSet(String key, @NotNull Object object) {
+
+    }
+
+
+    /**
      * 移除某个key值已经对应的值
-     *
-     * @param key
      */
     public static void remove(String key) {
         editor.remove(key);
@@ -137,9 +161,6 @@ public class SPUtils {
 
     /**
      * 查询某个key是否已经存在
-     *
-     * @param key
-     * @return
      */
     public static boolean contains(String key) {
         return sp.contains(key);
@@ -147,8 +168,6 @@ public class SPUtils {
 
     /**
      * 返回所有的键值对
-     *
-     * @return
      */
     public static Map<String, ?> getAll() {
         return sp.getAll();
@@ -164,8 +183,6 @@ public class SPUtils {
 
         /**
          * 反射查找apply的方法
-         *
-         * @return
          */
         @SuppressWarnings({"unchecked", "rawtypes"})
         private static Method findApplyMethod() {
@@ -181,8 +198,6 @@ public class SPUtils {
 
         /**
          * 如果找到则使用apply执行，否则使用commit
-         *
-         * @param editor
          */
         private static void apply(SharedPreferences.Editor editor) {
             try {
@@ -203,9 +218,6 @@ public class SPUtils {
 
     /**
      * 判断输入的文件名不能为空
-     *
-     * @param str
-     * @return
      */
     private static boolean isSpace(final String str) {
         if (str == null)
@@ -217,5 +229,4 @@ public class SPUtils {
         }
         return true;
     }
-
 }

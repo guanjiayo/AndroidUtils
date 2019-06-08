@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import androidx.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -15,6 +14,8 @@ import android.view.WindowManager;
 
 import java.lang.reflect.Field;
 
+import androidx.annotation.NonNull;
+import zs.xmx.lib_utils.utils.Logger;
 
 /*
  * @创建者     默小铭
@@ -49,8 +50,8 @@ import java.lang.reflect.Field;
  *              3.Activity实现了Fragment的标题栏
  *              4.如果Fragment的状态栏效果是纯色的,可以在该Fragment顶部动态设置同状态栏高度的View
  *
- *             //todo 小米也已经重归正途了
  *
+ * todo 优化  https://github.com/gyf-dev/ImmersionBar
  *
  * //todo 有时间看下--> 拿到DecorView,看里面源码找到状态栏文字图标属性的方法,然后反射换掉(只是思路)
  *
@@ -192,6 +193,10 @@ public class StatusBar {
 
 
     /**
+     * todo 直接把这个方法写在设置沉浸式状态栏里面?
+     *
+     * 设置了true,白底黑字
+     * <p>
      * 判断机型,设置状态栏图标主题(只关注状态栏颜色)
      * <p>
      * decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  //API16 视图延伸至状态栏区域，状态栏悬浮于视图之上
@@ -200,8 +205,8 @@ public class StatusBar {
      * | View.SYSTEM_UI_FLAG_LAYOUT_STABLE); //保持整个View稳定, 常和控制System UI悬浮, 隐藏的Flags共用, 使View不会因为System UI的变化而重新layout。
      */
     public static void setStatusBarLightMode(Activity activity, boolean isLightMode) {
+        Logger.e("测试", Build.MANUFACTURER.toUpperCase());
         switch (Build.MANUFACTURER.toUpperCase()) {
-
             case "MEIZU"://魅族Flyme4+
                 setStatusBarDarkIcon(activity, isLightMode);
                 break;
@@ -211,7 +216,11 @@ public class StatusBar {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (isLightMode) {
                         //设置状态栏黑色字体
-                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        //API16 视图延伸至状态栏区域，状态栏悬浮于视图之上
+                        ////保持整个View稳定, 常和控制System UI悬浮, 隐藏的Flags共用, 使View不会因为System UI的变化而重新layout。
+                        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
                     }
                 } else {
                     //6.0以下版本自定义黑色半透明背景,白色字体
